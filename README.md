@@ -1,2 +1,2 @@
 # foxGo
-Go program written by pyqt5
+Go program is written by pyqt5, running under Linux environment.
