@@ -27,7 +27,28 @@
 
 from PyQt5.QtWidgets import QApplication
 from mainWindow import mainWindow
-import sys
+import sys, os
+
+# check the confi file first
+
+configContent = """
+                [Path]
+                sgfpath = ~
+                
+                [Download]
+                autoskip = True
+                saveas = False
+                
+                [Gnugo]
+                address = 127.0.0.1
+                port = 5522"""
+                
+
+
+if not os.path.exists(os.path.expanduser("~/.config/foxGo.conf")):
+    f = open(os.path.expanduser("~/.config/foxGo.conf"), "w")
+    f.write(configContent)
+    f.close()
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
