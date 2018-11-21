@@ -29,7 +29,7 @@ from PyQt5.QtWidgets import QApplication
 from mainWindow import mainWindow
 import sys, os
 
-# check the confi file first
+# check the config file first
 
 configContent = """
                 [Path]
@@ -41,7 +41,8 @@ configContent = """
                 
                 [Gnugo]
                 address = 127.0.0.1
-                port = 5522"""
+                port = 5522
+                """
                 
 
 

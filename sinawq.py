@@ -108,22 +108,27 @@ class sinawq(websgfUi):
         return downloadList
     
     def download(self):
-        for i in self.getDownloadList():
-            gameName = self.pageList[i][1]
-            resName = self.pageList[i][2]
-            name = "%s-%s.sgf" %(gameName, resName)
-            name = name.replace("/", "-")
-            fileName = os.path.join(self.basePath, self.extensionPath, name)
-            if os.path.exists(fileName):
-                continue
-            else:
-                sgf = self.parser.getSgf(self.pageList[i][0])
-                f = open(fileName, "w")
-                f.write(sgf)
-                f.close()
-        b = QMessageBox(self)
-        b. setText("Success downloading!")
-        b.exec_()
+        if len(self.getDownloadList()) == 0:
+            b = QMessageBox(self)
+            b. setText("No items selected!")
+            b.exec_()
+        else:
+            for i in self.getDownloadList():
+                gameName = self.pageList[i][1]
+                resName = self.pageList[i][2]
+                name = "%s-%s.sgf" %(gameName, resName)
+                name = name.replace("/", "-")
+                fileName = os.path.join(self.basePath, self.extensionPath, name)
+                if os.path.exists(fileName):
+                    continue
+                else:
+                    sgf = self.parser.getSgf(self.pageList[i][0])
+                    f = open(fileName, "w")
+                    f.write(sgf)
+                    f.close()
+            b = QMessageBox(self)
+            b. setText("Success downloading!")
+            b.exec_()
         
 if __name__ == "__main__":
 	app = QApplication(sys.argv)

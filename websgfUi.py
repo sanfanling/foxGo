@@ -13,7 +13,7 @@ class websgfUi(QWidget):
         self.listView = QTableWidget(0, 4, self)
         self.listView.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.listView.setSelectionBehavior(QAbstractItemView.SelectRows)
-        self.listView.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.listView.setSelectionMode(QAbstractItemView.SingleSelection)
         header = ["Select", "Game", "Result", "Date"]
         self.listView.setHorizontalHeaderLabels(header)
         #self.listView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
