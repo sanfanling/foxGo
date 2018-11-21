@@ -1,0 +1,3 @@
+separate GTP commands
+optimize goEngine
+check .conf file in foxGo script
