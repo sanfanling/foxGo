@@ -75,8 +75,8 @@ class searchLocal(QWidget):
         t = self.listView.selectedItems()[0].text()
         ind = -1
         for i in self.titleList:
+            ind += 1
             if t in i:
-                ind += 1
                 break
         self.parent.startReviewMode(self.titleList[ind])
     
