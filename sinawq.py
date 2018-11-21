@@ -12,6 +12,8 @@ class sinawq(websgfUi):
     
     def __init__(self, parent = None):
         super().__init__()
+        self.setWindowIcon(QIcon("res/logo.png"))
+        self.setWindowTitle("download sgf files from sina weiqi")
         self.resize(800, 500)
         self.basePath = parent.sgfPath
         self.extensionPath = "sinawq"

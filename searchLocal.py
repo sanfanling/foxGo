@@ -13,7 +13,10 @@ class searchLocal(QWidget):
     def __init__(self, parent = None):
         super().__init__()
         
+        self.setWindowIcon(QIcon("res/logo.png"))
+        self.setWindowTitle("Search local sgf files")
         self.resize(600, 500)
+        self.parent = parent
         self.sgfPath = parent.sgfPath
         #self.sgfPath = "/home/frank/Downloads/sgf"
         
@@ -74,8 +77,8 @@ class searchLocal(QWidget):
         for i in self.titleList:
             if t in i:
                 ind += 1
-                self.parent.startReviewMode(self.titleList[ind])
                 break
+        self.parent.startReviewMode(self.titleList[ind])
     
     def showSearchResult(self, t):
         self.openButton.setEnabled(False)
