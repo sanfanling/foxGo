@@ -20,5 +20,5 @@ Function details:
 6. support print function
 
 Thanks to:
-1. jtauber: provide effencient sgf parser
+1. jtauber: provide effecient sgf parser
 2. Alice Xu: logo designer
