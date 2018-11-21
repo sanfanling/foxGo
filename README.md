@@ -8,8 +8,8 @@ Dependency:
 3. gnugo (if AI mode needed)
 
 Run:
-
-python foxGo.py
+1. navigate to source dir in console
+2. python foxGo.py
 
 Function details:
 1. support sgf file importing
@@ -20,6 +20,5 @@ Function details:
 6. support print function
 
 Thanks to:
-
 1. jtauber: provide effencient sgf parser
 2. Alice Xu: logo designer
