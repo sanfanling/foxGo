@@ -18,3 +18,8 @@ Function details:
 4. support sina weiqi and tx weiqi sgf files downloading
 5. fast and effecient local sgf file search
 6. support print function
+
+Thanks to:
+
+1. jtauber: provide effencient sgf parser
+2. Alice Xu: logo designer
