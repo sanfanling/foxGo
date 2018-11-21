@@ -5,8 +5,10 @@ foxGo is a Go program which is written by pyqt5, running under Linux environment
 Dependency:
 1. python >= 3.5
 2. BeautifulSoup4
+3. gnugo (if AI mode needed)
 
 Run:
+
 python foxGo.py
 
 Function details:
