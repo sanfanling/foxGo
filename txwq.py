@@ -5,6 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from websgfUi import websgfUi
 from websgf.txwqSgfParser import txwqSgfParser
+from myThread import getCatalogThread
 import sys, os
 
 
@@ -14,6 +15,10 @@ class txwq(websgfUi):
         super().__init__()
         self.setWindowIcon(QIcon("res/logo.png"))
         self.setWindowTitle("Download sgf files from tx weiqi")
+        self.listView.horizontalHeader().resizeSection(0, 50)
+        self.listView.horizontalHeader().resizeSection(1, 360)
+        self.listView.horizontalHeader().resizeSection(2, 200)
+        self.listView.horizontalHeader().resizeSection(3, 120)
         self.resize(800, 500)
         self.basePath = parent.sgfPath
         #self.basePath = "/home/frank/downloads/"
@@ -23,9 +28,9 @@ class txwq(websgfUi):
             os.makedirs(targetDir)
         self.parser = txwqSgfParser()
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
-        self.pageNum.setRange(1, self.parser.pageLimited)
+        self.contentThread = getCatalogThread(self)
+        self.contentThread.start()
+        
         
         self.pageNum.editingFinished.connect(self.gotoPage)
         self.nextPage.clicked.connect(self.gotoNextPage)
@@ -33,6 +38,7 @@ class txwq(websgfUi):
         self.next10Page.clicked.connect(self.gotoNext10Page)
         self.previous10Page.clicked.connect(self.gotoPrevious10Page)
         self.downloadButton.clicked.connect(self.download)
+        self.contentThread.finished.connect(self.showContent)
     
     def changeButtonStatus(self):
         if self.parser.pageLimited - self.parser.currentPage > 0:
@@ -58,41 +64,33 @@ class txwq(websgfUi):
     def gotoNextPage(self):
         self.parser.currentPage += 1
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def gotoPreviousPage(self):
         self.parser.currentPage -= 1
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def gotoNext10Page(self):
         self.parser.currentPage += 10
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def gotoPrevious10Page(self):
         self.parser.currentPage -= 10
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def gotoPage(self):
         self.parser.currentPage = self.pageNum.value()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def showPageNum(self):
         self.pageNum.setValue(self.parser.currentPage)
         
-    def showContent(self):
-        self.pageList = []
-        catalogUrl = self.parser.getCatalogUrl()
-        page = self.parser.getCatalog(catalogUrl)
-        self.pageList = self.parser.parseCatalog(page)
         
+    def showContent(self):
+        self.pageNum.setRange(1, self.parser.pageLimited)
         row = 0
         for url, game, res, date in self.pageList:
             row += 1            
@@ -101,6 +99,7 @@ class txwq(websgfUi):
             self.listView.setItem(row-1, 1, QTableWidgetItem(game))
             self.listView.setItem(row-1, 2, QTableWidgetItem(res))
             self.listView.setItem(row-1, 3, QTableWidgetItem(date))
+        self.changeButtonStatus()
     
     def getDownloadList(self):
         downloadList = []

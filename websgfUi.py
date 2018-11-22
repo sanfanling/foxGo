@@ -17,10 +17,7 @@ class websgfUi(QWidget):
         header = ["Select", "Game", "Result", "Date"]
         self.listView.setHorizontalHeaderLabels(header)
         #self.listView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-        self.listView.horizontalHeader().resizeSection(0, 50)
-        self.listView.horizontalHeader().resizeSection(1, 360)
-        self.listView.horizontalHeader().resizeSection(2, 200)
-        self.listView.horizontalHeader().resizeSection(3, 120)
+        
         
         hlayout_1 = QHBoxLayout(None)
         self.previous10Page = QPushButton("Previous 10 page", self)

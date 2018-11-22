@@ -5,6 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from websgfUi import websgfUi
 from websgf.sinawqSgfParser import sinawqSgfParser
+from myThread import getCatalogThread
 import sys, os
 
 
@@ -14,8 +15,13 @@ class sinawq(websgfUi):
         super().__init__()
         self.setWindowIcon(QIcon("res/logo.png"))
         self.setWindowTitle("download sgf files from sina weiqi")
+        self.listView.horizontalHeader().resizeSection(0, 50)
+        self.listView.horizontalHeader().resizeSection(1, 440)
+        self.listView.horizontalHeader().resizeSection(2, 120)
+        self.listView.horizontalHeader().resizeSection(3, 120)
         self.resize(800, 500)
         self.basePath = parent.sgfPath
+        #self.basePath = "/home/frank/downloads/"
         self.extensionPath = "sinawq"
         targetDir = os.path.join(self.basePath, self.extensionPath)
         if not os.path.isdir(targetDir):
@@ -23,8 +29,8 @@ class sinawq(websgfUi):
         self.parser = sinawqSgfParser()
         self.pageNum.setRange(1, self.parser.pageLimited+1)
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread = getCatalogThread(self)
+        self.contentThread.start()
         
         self.pageNum.editingFinished.connect(self.gotoPage)
         self.nextPage.clicked.connect(self.gotoNextPage)
@@ -32,6 +38,7 @@ class sinawq(websgfUi):
         self.next10Page.clicked.connect(self.gotoNext10Page)
         self.previous10Page.clicked.connect(self.gotoPrevious10Page)
         self.downloadButton.clicked.connect(self.download)
+        self.contentThread.finished.connect(self.showContent)
     
     def changeButtonStatus(self):
         if self.parser.pageLimited - self.parser.currentPage > 0:
@@ -57,41 +64,32 @@ class sinawq(websgfUi):
     def gotoNextPage(self):
         self.parser.currentPage += 1
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def gotoPreviousPage(self):
         self.parser.currentPage -= 1
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def gotoNext10Page(self):
         self.parser.currentPage += 10
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def gotoPrevious10Page(self):
         self.parser.currentPage -= 10
         self.showPageNum()
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def gotoPage(self):
         self.parser.currentPage = self.pageNum.value() - 1
-        self.showContent()
-        self.changeButtonStatus()
+        self.contentThread.start()
     
     def showPageNum(self):
         self.pageNum.setValue(self.parser.currentPage + 1)
         
     def showContent(self):
-        self.pageList = []
-        catalogUrl = self.parser.getCatalogUrl()
-        page = self.parser.getCatalog(catalogUrl)
-        self.pageList = self.parser.parseCatalog(page)
-        
+        self.pageNum.setRange(1, self.parser.pageLimited)
         row = 0
         for url, game, res, date in self.pageList:
             row += 1            
@@ -134,6 +132,6 @@ class sinawq(websgfUi):
         
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
-	w = sina()
+	w = sinawq()
 	w.show()
 	sys.exit(app.exec_())
