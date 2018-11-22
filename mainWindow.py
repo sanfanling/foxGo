@@ -14,7 +14,7 @@ from sinawq import sinawq
 import subprocess
 import socket
 import time
-from getOutputThread import getOutputThread
+from myThread import getOutputThread
 from configration import configration
 from configparser import ConfigParser
 from searchLocal import searchLocal
@@ -36,7 +36,7 @@ class mainWindow(QWidget):
         else:
             self.saveAs = False
         self.address = cf.get("Gnugo", "address")
-        self.port = cf.get("Gnugo", "port")        
+        self.port = cf.get("Gnugo", "port")
         
         self.setMouseTracking(True)
         self.setWindowTitle("foxGo")
@@ -239,16 +239,16 @@ class mainWindow(QWidget):
         self.modeLabel.setText("Now is in AI mode")
         self.thisGame = goEngine.go()
         self.board.update()
-        args = "gnugo --mode gtp --boardsize 19 --color black --level 15 --gtp-listen 5529"
+        args = "gnugo --mode gtp --boardsize 19 --color black --level 15 --gtp-listen {0}:{1}".format(self.address, self.port)
         subprocess.Popen(args.split())
         time.sleep(3)
         self.peopleColor = "black"
         self.goSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.goSocket.connect((self.address, self.port))
+        self.goSocket.connect((self.address, int(self.port)))
     
     def communicateAi(self):
         self.waitAi = getOutputThread(self)
-        self.waitAi.trigger.connect(self.makeAiMove)
+        self.waitAi.finished.connect(self.makeAiMove)
         self.waitAi.start()
         
     def makeAiMove(self):
