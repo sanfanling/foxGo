@@ -38,13 +38,13 @@ class go:
             deadList = self.checkEnemyBlockBreath(self.x, self.y, dict(self.stepsGoDict), self.goColor)
             deadListLen = len(deadList)
             if haveBreath and deadListLen == 0:
-                print("正常落子，已写入！")
+                print("has liberty, legal move!")
                 self.stepSuccess()
                 self.endStepSuccess()
                 self.changeColor()
                 return (1, 0)
             elif haveBreath and deadListLen != 0:
-                print("本身有气，正常落子，执行提子！")
+                print("has liberty, legal move, take!")
                 print(deadList)
                 self.stepSuccess()
                 chess = self.eatChess(deadList)
@@ -52,10 +52,10 @@ class go:
                 self.changeColor()
                 return (2, chess)
             elif not haveBreath and deadListLen == 0:
-                print("本身无气、无提子，这个点不能下！！")
+                print("no libery, no take, illegal move!")
                 return (0, 0)
             elif not haveBreath and deadListLen != 0:
-                print("本身无气但有提子，正常落子，执行提子！疑似打劫，预先检查！！")
+                print("no liberty，but legal move, take! it maybe a ko, check!")
                 print(deadList)
                 if not self.checkJie(deadList):
                     self.stepSuccess()
@@ -64,7 +64,7 @@ class go:
                     self.changeColor()
                     return (2, chess)
                 else:
-                    print("此处出现劫争，这个点不能下！！")   
+                    print("it's a ko, illegal move!")   
                     return (0, 0)
         return False
 
