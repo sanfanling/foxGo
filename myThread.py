@@ -42,20 +42,16 @@ class getOutputThread(QThread):
             d = self.parent.goSocket.recv(1024 * 1024).decode("utf8")
             if '\n\n' in d:
                 break
-        
+        print("black: {0}".format(d))
         data2 = "genmove white\n"
         self.parent.goSocket.sendall(data2.encode("utf8"))
-        result = []
+        #result = []
         while True:
             data3 = self.parent.goSocket.recv(1024 * 1024).decode("utf8")
-            result.append(data3)
             if '\n\n' in data3:
                 break
-        result = ''.join(result)
-        if result[0] == '?':
-            raise FailedCommand(result)
-        result = result[1:]
-        data4 = result.strip().split(" ")[0]
+        print("white: {0}".format(data3))
+        data4 = data3.strip()
         self.parent.thisGame.x, self.parent.thisGame.y = self.fromGtpCoordinate(data4)
         
         #self.trigger.emit()
