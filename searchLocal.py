@@ -67,9 +67,19 @@ class searchLocal(QWidget):
         self.searchBox.textChanged.connect(self.showSearchResult)
         self.openButton.clicked.connect(self.getFileName)
         self.listView.cellActivated.connect(self.enableOpenButton)
+        self.listView.cellDoubleClicked.connect(self.doubleClickOpen)
     
     def enableOpenButton(self, r, c):
         self.openButton.setEnabled(True)
+    
+    def doubleClickOpen(self, r, c):
+        t = self.listView.item(r, c).text()
+        ind = -1
+        for i in self.titleList:
+            ind += 1
+            if t in i:
+                break
+        self.parent.startReviewMode(self.titleList[ind])
     
     def getFileName(self):
         t = self.listView.selectedItems()[0].text()
