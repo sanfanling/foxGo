@@ -42,6 +42,14 @@ configContent = """
                 [Gnugo]
                 address = 127.0.0.1
                 port = 5522
+                
+                [Board]
+                style = style1
+                coordinate = True
+                
+                [Sound]
+                music = False
+                effect = True
                 """
                 
 
@@ -50,6 +58,7 @@ if not os.path.exists(os.path.expanduser("~/.config/foxGo.conf")):
     f = open(os.path.expanduser("~/.config/foxGo.conf"), "w")
     f.write(configContent)
     f.close()
+    
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
