@@ -6,7 +6,7 @@ from PyQt5.QtCore import *
 
 class getOutputThread(QThread):
     
-    trigger = pyqtSignal()
+    #trigger = pyqtSignal()
     
     def __init__(self, parent):
         super().__init__()
@@ -58,4 +58,15 @@ class getOutputThread(QThread):
         data4 = result.strip().split(" ")[0]
         self.parent.thisGame.x, self.parent.thisGame.y = self.fromGtpCoordinate(data4)
         
-        self.trigger.emit()
+        #self.trigger.emit()
+
+class getCatalogThread(QThread):
+    
+    def __init__(self, parent = None):
+        super().__init__()
+        self.parent = parent
+    
+    def run(self):
+        catalogUrl = self.parent.parser.getCatalogUrl()
+        page = self.parent.parser.getCatalog(catalogUrl)
+        self.parent.pageList = self.parent.parser.parseCatalog(page)
