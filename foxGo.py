@@ -44,12 +44,13 @@ configContent = """
                 port = 5522
                 
                 [Board]
+                handcounts = False
                 style = style1
-                coordinate = True
+                coordinate = False
                 
                 [Sound]
                 music = False
-                effect = True
+                effect = False
                 """
                 
 

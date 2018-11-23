@@ -5,7 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
 from PyQt5.QtMultimedia import QSound
-import os
+import os, time
 import goEngine
 import sgfData
 from board import board
@@ -13,7 +13,6 @@ from txwq import txwq
 from sinawq import sinawq
 import subprocess
 import socket
-import time
 from myThread import getOutputThread
 from configration import configration
 from configparser import ConfigParser
@@ -37,6 +36,24 @@ class mainWindow(QWidget):
             self.saveAs = False
         self.address = cf.get("Gnugo", "address")
         self.port = cf.get("Gnugo", "port")
+        if cf.get("Board", "handcounts").lower() == "true":
+            self.handcounts = True
+        else:
+            self.handcounts = False
+        self.style = cf.get("Board", "style")
+        if cf.get("Board", "coordinate").lower() == "true":
+            self.coordinate = True
+        else:
+            self.coordinate = False
+        if cf.get("Sound", "music").lower() == "true":
+            self.music = True
+        else:
+            self.music = False
+        if cf.get("Sound", "effect").lower() == "true":
+            self.effect = True
+        else:
+            self.effect = False
+        
         
         self.setMouseTracking(True)
         self.setWindowTitle("foxGo")
@@ -97,10 +114,11 @@ class mainWindow(QWidget):
         dispalyMenu = self.menuBar.addMenu("Display")
         self.showHands = QAction("Handcounts")
         self.showHands.setCheckable(True)
+        self.showHands.setChecked(self.handcounts)
         dispalyMenu.addAction(self.showHands)
         self.withCoordinate = QAction("Coordinate")
         self.withCoordinate.setCheckable(True)
-        self.withCoordinate.setChecked(True)
+        self.withCoordinate.setChecked(self.coordinate)
         dispalyMenu.addAction(self.withCoordinate)
         boardStyleMenu = dispalyMenu.addMenu("Board style")
         self.styleGroup = QActionGroup(self)
@@ -108,20 +126,23 @@ class mainWindow(QWidget):
         self.boardStyle2 = QAction("Style2")
         self.boardStyle1.setCheckable(True)
         self.boardStyle2.setCheckable(True)
-        self.boardStyle1.setChecked(True)
+        if self.style == "style1":
+            self.boardStyle1.setChecked(True)
+        elif self.style == "style2":
+            self.boardStyle2.setChecked(True)
         self.styleGroup.addAction(self.boardStyle1)
         self.styleGroup.addAction(self.boardStyle2)
         boardStyleMenu.addAction(self.boardStyle1)
         boardStyleMenu.addAction(self.boardStyle2)
         
         soundMenu = self.menuBar.addMenu("Sound")
-        self.music = QAction("Music")
-        self.music.setCheckable(True)
-        self.music.setChecked(True)
+        self.musicAction = QAction("Music")
+        self.musicAction.setCheckable(True)
+        self.musicAction.setChecked(self.music)
         self.soundEffect = QAction("Sound Effect")
         self.soundEffect.setCheckable(True)
-        self.soundEffect.setChecked(True)
-        soundMenu.addAction(self.music)
+        self.soundEffect.setChecked(self.effect)
+        soundMenu.addAction(self.musicAction)
         soundMenu.addAction(self.soundEffect)
         
         websgfMenu = self.menuBar.addMenu("Web sgf")
@@ -560,8 +581,29 @@ class mainWindow(QWidget):
             cf.set("Download", "saveas", "True")
         else:
             cf.set("Download", "saveas", "False")
+        
         cf.set("Gnugo", "address", self.address)
         cf.set("Gnugo", "port", self.port)
+        if self.showHands.isChecked():
+            cf.set("Board", "handcounts", "True")
+        else:
+            cf.set("Board", "handcounts", "False")
+        if self.boardStyle1.isChecked():
+            cf.set("Board", "style", "style1")
+        elif self.boardStyle2.isChecked():
+            cf.set("Board", "style", "style2")
+        if self.withCoordinate.isChecked():
+            cf.set("Board", "coordinate", "True")
+        else:
+            cf.set("Board", "coordinate", "False")
+        if self.musicAction.isChecked():
+            cf.set("Sound", "music", "True")
+        else:
+            cf.set("Sound", "music", "False")
+        if self.soundEffect.isChecked():
+            cf.set("Sound", "effect", "True")
+        else:
+            cf.set("Sound", "effect", "False")
         f = open(os.path.expanduser("~/.config/foxGo.conf"), 'w')
         cf.write(f)
         f.close()

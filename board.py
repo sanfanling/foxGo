@@ -24,7 +24,7 @@ class board(QWidget):
         elif self.parent.boardStyle2.isChecked() and self.parent.withCoordinate.isChecked():
             b = "bboard-y.png"
             size = QSize(665, 665)
-        elif self.parent.boardStyle2.isChecked() and not self.paren.withCoordinate.isChecked():
+        elif self.parent.boardStyle2.isChecked() and not self.parent.withCoordinate.isChecked():
             b = "bboard-n.png"
             size = QSize(649, 649)
         self.setSize(size)
