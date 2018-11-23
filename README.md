@@ -22,3 +22,5 @@ Function details:
 Thanks to:
   1. jtauber: provide effecient sgf parser
   2. Alice Xu: logo designer
+
+PLEASE NOTE: IF ERROR OCCURS ONCE RUNNING, TRY DEL YOUR CONFIG FILE (HOME/.config/foxGo.conf), SINCE THE WHOLE APPLICATION IS UNDER DEVELOPING
