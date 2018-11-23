@@ -54,7 +54,7 @@ class mainWindow(QWidget):
         else:
             self.effect = False
         
-        
+        self.setFocusPolicy(Qt.StrongFocus)
         self.setMouseTracking(True)
         self.setWindowTitle("foxGo")
         self.setWindowIcon(QIcon("res/logo.png"))
@@ -566,8 +566,18 @@ class mainWindow(QWidget):
         QMessageBox.about(self, "About foxGo", "Enjoy Go's magic with foxGo under Linux environment")
     
     def keyPressEvent(self, e):
-        if e.key() == Qt.Key_Right:
+        if e.key() == Qt.Key_Right or e.key() == Qt.Key_Down or e.key() == Qt.Key_Space:
             self.nextStep_()
+        elif e.key() == Qt.Key_Left or e.key() == Qt.Key_Up:
+            self.previousStep_()
+        elif e.key() == Qt.Key_Home:
+            self.previousToStart_()
+        elif e.key() == Qt.Key_End:
+            self.nextToEnd_()
+        elif e.key() == Qt.Key_PageUp:
+            self.previous10Steps_()
+        elif e.key() == Qt.Key_PageDown:
+            self.next10Steps_()
     
     def closeEvent(self, e):
         cf = ConfigParser()
