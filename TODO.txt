@@ -1,4 +1,4 @@
 separate GTP commands
 optimize goEngine
-check .conf file in foxGo script
 parse new setting items in program
+add "pass" in program
