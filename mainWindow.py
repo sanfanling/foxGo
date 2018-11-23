@@ -578,6 +578,8 @@ class mainWindow(QWidget):
             self.previous10Steps_()
         elif e.key() == Qt.Key_PageDown:
             self.next10Steps_()
+        elif e.key() == Qt.Key_Escape:
+            self.backToPoint_()
     
     def closeEvent(self, e):
         cf = ConfigParser()

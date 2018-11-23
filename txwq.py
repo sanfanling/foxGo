@@ -20,8 +20,10 @@ class txwq(websgfUi):
         self.listView.horizontalHeader().resizeSection(2, 200)
         self.listView.horizontalHeader().resizeSection(3, 120)
         self.resize(800, 500)
+        self.autoSkip = parent.autoSkip
+        self.saveAs = parent.saveAs
         self.basePath = parent.sgfPath
-        #self.basePath = "/home/frank/downloads/"
+        #self.basePath = "/home/frank/Downloads/sgf"
         self.extensionPath = "txwq"
         targetDir = os.path.join(self.basePath, self.extensionPath)
         if not os.path.isdir(targetDir):
@@ -122,15 +124,32 @@ class txwq(websgfUi):
                 name = name.replace("/", "-")
             
                 fileName = os.path.join(self.basePath, self.extensionPath, name)
-                if os.path.exists(fileName):
+                if os.path.exists(fileName) and self.autoSkip:
                     continue
+                elif os.path.exists(fileName) and not self.autoSkip:
+                    if self.saveAs:
+                        re = QFileDialog.getSaveFileName(self, "Save as", fileName, "Go records file(*.sgf)")
+                        tmpfile = re[0]
+                        if tmpfile == "":
+                            continue
+                        else:
+                            sgf = self.parser.getSgf(self.pageList[i][0])
+                            f = open(tmpfile, "w")
+                            f.write(sgf)
+                            f.close()
+                    else:
+                        sgf = self.parser.getSgf(self.pageList[i][0])
+                        f = open(fileName, "w")
+                        f.write(sgf)
+                        f.close()
+                        
                 else:
                     sgf = self.parser.getSgf(self.pageList[i][0])
                     f = open(fileName, "w")
                     f.write(sgf)
                     f.close()
             b = QMessageBox(self)
-            b. setText("Success downloading!")
+            b. setText("Download mission finished!")
             b.exec_()
         
 if __name__ == "__main__":
