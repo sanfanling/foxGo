@@ -1,3 +1,4 @@
 separate GTP commands
 optimize goEngine
-add "pass" in program
+add "pass", "resign" in program
+add quick key words seach buttons in local search dailog
