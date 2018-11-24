@@ -16,9 +16,9 @@ class searchLocal(QWidget):
         self.setWindowIcon(QIcon("res/logo.png"))
         self.setWindowTitle("Search local sgf files")
         self.resize(600, 500)
-        #self.parent = parent
-        #self.sgfPath = parent.sgfPath
-        self.sgfPath = "/home/frank/Downloads/sgf"
+        self.parent = parent
+        self.sgfPath = parent.sgfPath
+        #self.sgfPath = "/home/frank/Downloads/sgf"
         
         h1 = QHBoxLayout(None)
         self.rangeLabel = QLabel("Select range:", self)
