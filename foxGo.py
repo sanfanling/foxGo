@@ -51,6 +51,9 @@ configContent = """
                 [Sound]
                 music = False
                 effect = False
+		
+		[Tag]
+		tags = AlphaGo
                 """
                 
 
