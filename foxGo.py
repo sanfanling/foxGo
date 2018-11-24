@@ -52,8 +52,8 @@ configContent = """
                 music = False
                 effect = False
 		
-		[Tag]
-		tags = AlphaGo
+                [Tag]
+                tags = AlphaGo, 
                 """
                 
 
