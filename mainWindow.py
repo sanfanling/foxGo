@@ -5,18 +5,18 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
 from PyQt5.QtMultimedia import QSound
-import os, time
+import os
 import goEngine
 import sgfData
 from board import board
 from txwq import txwq
 from sinawq import sinawq
 import subprocess
-import socket
 from myThread import getOutputThread
 from configration import configration
 from configparser import ConfigParser
 from searchLocal import searchLocal
+from startAiDialog import startAiDialog
 
 class mainWindow(QWidget):
     
@@ -180,6 +180,14 @@ class mainWindow(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
         self.stepsSlider.setSizePolicy(sizePolicy)
         
+        self.otherButton = QPushButton("Other", self)
+        otherMenu = QMenu(self)
+        self.passAction = QAction("Pass", self)
+        self.resignAction = QAction("Resign", self)
+        otherMenu.addAction(self.passAction)
+        otherMenu.addAction(self.resignAction)
+        self.otherButton.setMenu(otherMenu)
+        
         hlayout.addWidget(self.previousToStart)
         hlayout.addWidget(self.previous10Steps)
         hlayout.addWidget(self.previousStep)
@@ -188,6 +196,7 @@ class mainWindow(QWidget):
         hlayout.addWidget(self.next10Steps)
         hlayout.addWidget(self.nextToEnd)
         hlayout.addWidget(self.backToPoint)
+        hlayout.addWidget(self.otherButton)
         hlayout.addWidget(self.stepsSlider)
 
         hlayout_1 = QHBoxLayout(None)
@@ -252,20 +261,22 @@ class mainWindow(QWidget):
         self.stepsSlider.setValue(self.stepPoint - self.breakPoint)
     
     def startAiMode(self):
-        self.mode = "ai"
-        self.commentBox.clear()
-        self.stepPoint = 0
-        self.breakPoint = 0
-        self.showStepsCount(True)
-        self.modeLabel.setText("Now is in AI mode")
-        self.thisGame = goEngine.go()
-        self.board.update()
-        args = "gnugo --mode gtp --boardsize 19 --color black --level 15 --gtp-listen {0}:{1}".format(self.address, self.port)
-        subprocess.Popen(args.split())
-        time.sleep(3)
-        self.peopleColor = "black"
-        self.goSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.goSocket.connect((self.address, int(self.port)))
+        aiDialog = startAiDialog(self)
+        if aiDialog.exec_() == QDialog.Accepted:
+            self.mode = "ai"
+            self.commentBox.clear()
+            self.stepPoint = 0
+            self.breakPoint = 0
+            self.showStepsCount(True)
+            self.modeLabel.setText("Now is in AI mode")
+            self.thisGame = goEngine.go()
+            self.board.update()
+            if aiDialog.blackStone.isChecked():
+                self.peopleColor = "black"
+            else:
+                self.peopleColor = "white"
+            self.goSocket = aiDialog.goSocket
+        
     
     def communicateAi(self):
         self.waitAi = getOutputThread(self)
