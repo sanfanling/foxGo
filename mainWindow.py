@@ -275,8 +275,7 @@ class mainWindow(QWidget):
                 self.peopleColor = "black"
             else:
                 self.peopleColor = "white"
-            self.goSocket = aiDialog.goSocket
-        
+            self.goSocket = aiDialog.goSocket        
     
     def communicateAi(self):
         self.waitAi = getOutputThread(self)
