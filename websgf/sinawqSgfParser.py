@@ -7,8 +7,8 @@ import re
 
 class sinawqSgfParser:
 
-    def __init__(self, startPage = 0):
-        self.currentPage = startPage
+    def __init__(self):
+        self.currentPage = 0
         self.pageLimited = 971
 
     def getCatalogUrl(self):

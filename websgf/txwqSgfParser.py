@@ -7,8 +7,8 @@ import os.path
 
 class txwqSgfParser:
 
-    def __init__(self, startPage = 1):
-        self.currentPage = startPage
+    def __init__(self):
+        self.currentPage = 1
         self.pageLimited = None
     
     def getCatalogUrl(self):
@@ -48,6 +48,6 @@ class txwqSgfParser:
 
 if __name__ == "__main__":
     p = txwqSgfParser()
-    t = p.getCatalog()
+    t = p.getCatalog(p.getCatalogUrl())
     l = p.parseCatalog(t)
     print(p.getSgf(l[0][0]))

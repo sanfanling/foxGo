@@ -11,6 +11,7 @@ import sgfData
 from board import board
 from txwq import txwq
 from sinawq import sinawq
+from cyberoro import cyberoro
 import subprocess
 from myThread import getOutputThread
 from configration import configration
@@ -82,6 +83,7 @@ class mainWindow(QWidget):
         self.settingAction.triggered.connect(self.settingAction_)
         self.foxAction.triggered.connect(self.foxAction_)
         self.sinaAction.triggered.connect(self.sinaAction_)
+        self.cyberoroAction.triggered.connect(self.cyberoroAction_)
         self.searchAction.triggered.connect(self.searchAction_)
         self.quit.triggered.connect(self.close)
         self.aboutQt.triggered.connect(self.aboutQt_)
@@ -148,9 +150,12 @@ class mainWindow(QWidget):
         websgfMenu = self.menuBar.addMenu("Web sgf")
         self.foxAction = QAction("Download from Tx Weiqi...")
         self.sinaAction = QAction("Download from Sina Weiqi...")
+        self.cyberoroAction = QAction("Download from Cyberoro...")
         self.searchAction = QAction("Search local sgf...")
         websgfMenu.addAction(self.foxAction)
         websgfMenu.addAction(self.sinaAction)
+        websgfMenu.addAction(self.cyberoroAction)
+        websgfMenu.addSeparator()
         websgfMenu.addAction(self.searchAction)
         
         settingMenu = self.menuBar.addMenu("Configration")
@@ -564,6 +569,10 @@ class mainWindow(QWidget):
     def sinaAction_(self):
         self.sina = sinawq(self)
         self.sina.show()
+    
+    def cyberoroAction_(self):
+        self.cyberoro = cyberoro(self)
+        self.cyberoro.show()
     
     def searchAction_(self):
         self.searchBox = searchLocal(self)
