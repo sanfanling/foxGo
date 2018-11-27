@@ -76,6 +76,7 @@ class mainWindow(QWidget):
         self.nextStep.clicked.connect(self.nextStep_)
         self.previousStep.clicked.connect(self.previousStep_)
         self.backToPoint.clicked.connect(self.backToPoint_)
+        self.passAction.triggered.connect(self.passAction_)
         self.commentBox.anchorClicked.connect(self.showVariation)
         self.stepsCount.editingFinished.connect(self.gotoSpecifiedStep)
         self.stepsSlider.valueChanged.connect(self.stepsCount.setValue)
@@ -208,11 +209,15 @@ class mainWindow(QWidget):
         vlayout = QVBoxLayout(None)
         vlayout.setContentsMargins(0, 30, 0, 30)
         self.playerLabel = QLabel(self)
-        font = self.playerLabel.font()
-        font.setBold(True)
-        font.setPointSize(20)
-        self.playerLabel.setFont(font)
+        font1 = self.playerLabel.font()
+        font1.setBold(True)
+        font1.setPointSize(20)
+        self.playerLabel.setFont(font1)
         self.gameInfo = QLabel(self)
+        font2 = self.gameInfo.font()
+        font2.setPointSize(10)
+        self.gameInfo.setFont(font2)
+        
         self.commentLabel = QLabel("Comments", self)
         self.commentBox = QTextBrowser(self)
         self.commentBox.setOpenLinks(False)
@@ -220,10 +225,6 @@ class mainWindow(QWidget):
         vlayout.addWidget(self.gameInfo)
         vlayout.addWidget(self.commentLabel)
         vlayout.addWidget(self.commentBox)
-        vlayout.setStretch(0, 1)
-        vlayout.setStretch(1, 5)
-        vlayout.setStretch(2, 0)
-        vlayout.setStretch(3, 10)
         
         self.board = board(self)
         
@@ -442,6 +443,16 @@ class mainWindow(QWidget):
         self.showStepsCount()
         self.reviewMove()
     
+    def passAction_(self):
+        if self.mode == "free" or self.mode == "test":
+            self.makeSound(1, 0)
+            self.thisGame.changeColor()
+        elif self.mode == "review":
+            pass # real pass
+        else:
+            pass # communicate with ai
+        
+    
     def reviewMove(self):
         self.thisGame.stepsGoDict = {}
         tmpList = self.thisGame.stepsGo[:self.stepPoint]
@@ -454,7 +465,6 @@ class mainWindow(QWidget):
                 moveSuccess, deadChessNum = self.thisGame.makeStepSafe()
             self.board.update()
             self.makeSound(moveSuccess, deadChessNum)
-            
             self.thisGame.changeColor()
             
         else:
