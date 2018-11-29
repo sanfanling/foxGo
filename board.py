@@ -104,7 +104,8 @@ class board(QWidget):
                     self.parent.showStepsCount(True)
                     self.repaint()
                     self.parent.makeSound(moveSuccess, deadChessNum)
-                    self.parent.communicateAi()
+                    print("People move: {0},{1}".format(self.parent.thisGame.x, self.parent.thisGame.y))
+                    self.parent.communicateAi("play")
     
     def paintEvent(self, e):
         p = QPainter()

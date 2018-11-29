@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.mainWindow.py.kate-swp
 *.py[cod]
 *$py.class
 test-4.0.py

@@ -6,55 +6,40 @@ from PyQt5.QtCore import *
 
 class getOutputThread(QThread):
     
-    #trigger = pyqtSignal()
+    trigger = pyqtSignal(str)
     
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
-    
-    def toGtpCoordinate(self, x, y):
-        if x <= 8:
-            xname = chr(x + 64)
-        else:
-            xname = chr(x + 65)
-        yname = str(20 - y)
-        gtp = xname + yname
-        return gtp
-    
-    def fromGtpCoordinate(self, c):
-        xname = c[0]
-        yname = c[1:]
-        xname_ = ord(xname)
-        if xname_ <= 72:
-            x = int(xname_ - 64)
-        else:
-            x = int(xname_ - 65)
-        y = 20 - int(yname)
-        return x, y
+        self.command = None
+
     
     def run(self):
-        #print("Black: %d,%d" %(self.parent.thisGame.x, self.parent.thisGame.y))
-        gtp = self.toGtpCoordinate(self.parent.thisGame.x, self.parent.thisGame.y)
-        data1 = "play black %s\n" %(gtp,)
-        self.parent.goSocket.sendall(data1.encode("utf8"))
-        
+        self.parent.goSocket.sendall(self.command.encode("utf8"))
+        result = ""
         while True:
             d = self.parent.goSocket.recv(1024 * 1024).decode("utf8")
+            result += d
             if '\n\n' in d:
                 break
-        print("black: {0}".format(d))
-        data2 = "genmove white\n"
-        self.parent.goSocket.sendall(data2.encode("utf8"))
-        #result = []
-        while True:
-            data3 = self.parent.goSocket.recv(1024 * 1024).decode("utf8")
-            if '\n\n' in data3:
-                break
-        print("white: {0}".format(data3))
-        data4 = data3.strip()
-        self.parent.thisGame.x, self.parent.thisGame.y = self.fromGtpCoordinate(data4)
+        result = result.replace("=", "")    
+        print("thread: {}".format(result.strip()))
+        self.trigger.emit(result.strip())
         
-        #self.trigger.emit()
+        
+        #if self.send:
+            #self.peopleMove()
+            
+        #if self.receive:
+            #message = self.aiMove()
+            #if message.lower() == "pass":
+                #pass
+            #elif message.lower() == "resign":
+                #pass
+            #else:
+                #self.parent.thisGame.x, self.parent.thisGame.y = self.fromGtpCoordinate(message)
+        
+        
 
 class getCatalogThread(QThread):
     

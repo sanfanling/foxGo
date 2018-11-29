@@ -11,7 +11,7 @@ class startAiDialog(QDialog):
     
     def __init__(self, parent = None):
         super().__init__()
-        self.timer = QTimeLine(3000, self)
+        self.timer = QTimeLine(2000, self)
         #self.address = parent.address
         #self.port = parent.port
         self.address = "127.0.0.1"
@@ -29,8 +29,8 @@ class startAiDialog(QDialog):
         h2 = QHBoxLayout(None)
         self.levelLabel = QLabel("Gnugo level:", self)
         self.gnuLevel = QSpinBox(self)
-        self.gnuLevel.setRange(0, 30)
-        self.gnuLevel.setValue(10)
+        self.gnuLevel.setRange(1, 10)
+        self.gnuLevel.setValue(8)
         h2.addWidget(self.levelLabel)
         h2.addWidget(self.gnuLevel)
         
@@ -81,7 +81,7 @@ class startAiDialog(QDialog):
             cl = "white"
         args = "gnugo --mode gtp --boardsize 19 --color {0} --level {1} --gtp-listen {2}:{3}".format(cl, str(self.gnuLevel.value()), self.address, self.port)
         print(args)
-        subprocess.Popen(args.split())
+        self.process = subprocess.Popen(args.split())
         self.timer.start()
         
 

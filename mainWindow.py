@@ -76,7 +76,7 @@ class mainWindow(QWidget):
         self.nextStep.clicked.connect(self.nextStep_)
         self.previousStep.clicked.connect(self.previousStep_)
         self.backToPoint.clicked.connect(self.backToPoint_)
-        self.passAction.triggered.connect(self.passAction_)
+        self.quitAction.triggered.connect(self.quitAction_)
         self.commentBox.anchorClicked.connect(self.showVariation)
         self.stepsCount.editingFinished.connect(self.gotoSpecifiedStep)
         self.stepsSlider.valueChanged.connect(self.stepsCount.setValue)
@@ -186,12 +186,19 @@ class mainWindow(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
         self.stepsSlider.setSizePolicy(sizePolicy)
         
-        self.otherButton = QPushButton("Other", self)
+        self.otherButton = QPushButton("Ai mode options", self)
+        self.otherButton.setEnabled(False)
         otherMenu = QMenu(self)
         self.passAction = QAction("Pass", self)
         self.resignAction = QAction("Resign", self)
+        self.replayAction = QAction("Replay", self)
+        self.estimateAction = QAction("Estimate", self)
+        self.quitAction = QAction("Quit", self)
         otherMenu.addAction(self.passAction)
         otherMenu.addAction(self.resignAction)
+        otherMenu.addAction(self.replayAction)
+        otherMenu.addAction(self.estimateAction)
+        otherMenu.addAction(self.quitAction)
         self.otherButton.setMenu(otherMenu)
         
         hlayout.addWidget(self.previousToStart)
@@ -207,7 +214,7 @@ class mainWindow(QWidget):
 
         hlayout_1 = QHBoxLayout(None)
         vlayout = QVBoxLayout(None)
-        vlayout.setContentsMargins(0, 30, 0, 30)
+        vlayout.setContentsMargins(30, 30, 0, 30)
         self.playerLabel = QLabel(self)
         font1 = self.playerLabel.font()
         font1.setBold(True)
@@ -271,40 +278,74 @@ class mainWindow(QWidget):
         if aiDialog.exec_() == QDialog.Accepted:
             self.mode = "ai"
             self.commentBox.clear()
+            self.otherButton.setEnabled(True)
             self.stepPoint = 0
             self.breakPoint = 0
             self.showStepsCount(True)
             self.modeLabel.setText("Now is in AI mode")
             self.thisGame = goEngine.go()
             self.board.update()
+            self.waitAi = getOutputThread(self)
+            self.waitAi.trigger.connect(self.aiMessage)
+            self.goSocket = aiDialog.goSocket
+            self.process = aiDialog.process
             if aiDialog.blackStone.isChecked():
                 self.peopleColor = "black"
+                self.aiColor = "white"
             else:
                 self.peopleColor = "white"
-            self.goSocket = aiDialog.goSocket        
+                self.aiColor = "black"
+                self.communicateAi("genmove") # args = clear_board, estimate_score, genmove, play, pass, resign, quit
+            
     
-    def communicateAi(self):
-        self.waitAi = getOutputThread(self)
-        self.waitAi.finished.connect(self.makeAiMove)
-        self.waitAi.start()
+    def communicateAi(self, m):
+        if m == "genmove":
+            self.waitAi.command = "genmove {0}\n".format(self.aiColor)
+            self.waitAi.run()
+        elif m == "play":
+            t = self.toGtpCoordinate(self.thisGame.x, self.thisGame.y)
+            self.waitAi.command = "play {0} {1}\n".format(self.peopleColor, t)
+            self.waitAi.run()
+        elif m == "pass":
+            self.waitAi.command = "play {0} pass\n".format(self.peopleColor)
+        elif m == "quit":
+            self.goSocket.close()
+            self.process.communicate("quit\n")
+            self.startFreeMode()
+        elif m == "clear_board":
+            self.waitAi.command = "clear_board\n"
+            self.waitAi.run()
+        elif m == "estimate_score":
+            self.waitAi.command = "estimate_score\n"
+            self.waitAi.run()
         
-    def makeAiMove(self):
-        moveSuccess , deadChessNum = self.thisGame.makeStepSafe()
-        self.stepPoint += 1
-        self.showStepsCount(True)
-        self.board.update()
-        self.makeSound(moveSuccess, deadChessNum)
-        self.thisGame.changeColor()
+    def aiMessage(self, message):
+        print(message)
+        if message.lower() == "pass":
+            pass
+        elif message.lower() == "resign":
+            QMessageBox.information(self, "Game result", "Congratulations, you win this game!")
+        elif message == "":
+            self.communicateAi("genmove")
+        else:
+            self.thisGame.x, self.thisGame.y = self.fromGtpCoordinate(message)
+            print("AI move: {0},{1}".format(self.thisGame.x, self.thisGame.y))
+            moveSuccess , deadChessNum = self.thisGame.makeStepSafe()
+            self.stepPoint += 1
+            self.showStepsCount(True)
+            self.board.update()
+            self.makeSound(moveSuccess, deadChessNum)
+            self.thisGame.changeColor()
     
     def startFreeMode(self):
         self.mode = "free"
         self.commentBox.clear()
         self.stepPoint = 0
         self.breakPoint = 0
-        #self.clearLength = 0
         self.thisGame = goEngine.go()
         self.showStepsCount(True)
         self.modeLabel.setText("Now is in free mode")
+        self.otherButton.setEnabled(False)
     
     def restartFreeAndTestMode(self):
         self.thisGame.stepsGo = self.thisGame.stepsGo[:self.stepPoint]
@@ -322,10 +363,12 @@ class mainWindow(QWidget):
         #self.showStepsCount()
         self.reviewMove()
         self.backToPoint.setEnabled(True)
+        self.otherButton.setEnabled(False)
         
     def startReviewMode(self, f):
         self.mode = "review"
         self.commentBox.clear()
+        self.otherButton.setEnabled(False)
         self.modeLabel.setText("Current mode: Review")
         self.sgfEngine = sgfData.sgfData(f)
         self.thisGame = goEngine.go()
@@ -451,6 +494,9 @@ class mainWindow(QWidget):
             pass # real pass
         else:
             pass # communicate with ai
+    
+    def quitAction_(self):
+        pass #quit gnugo and end the ai game
         
     
     def reviewMove(self):
@@ -593,6 +639,26 @@ class mainWindow(QWidget):
     
     def aboutApp_(self):
         QMessageBox.about(self, "About foxGo", "Enjoy Go's magic with foxGo under Linux environment")
+    
+    def toGtpCoordinate(self, x, y):
+        if x <= 8:
+            xname = chr(x + 64)
+        else:
+            xname = chr(x + 65)
+        yname = str(20 - y)
+        gtp = xname + yname
+        return gtp
+    
+    def fromGtpCoordinate(self, c):
+        xname = c[0]
+        yname = c[1:]
+        xname_ = ord(xname)
+        if xname_ <= 72:
+            x = int(xname_ - 64)
+        else:
+            x = int(xname_ - 65)
+        y = 20 - int(yname)
+        return x, y
     
     def keyPressEvent(self, e):
         if e.key() == Qt.Key_Right or e.key() == Qt.Key_Down or e.key() == Qt.Key_Space:
