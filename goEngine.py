@@ -66,7 +66,7 @@ class go:
                 else:
                     print("it's a ko, illegal move!")   
                     return (0, 0)
-        return False
+        return (0, 0)
 
     def stepSuccess(self):
         self.stepNum += 1
