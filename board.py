@@ -55,17 +55,20 @@ class board(QWidget):
     def mouseMoveEvent(self, e):
         self.parent.thisGame.x, self.parent.thisGame.y = self.posMapToGo(e.pos().x(), e.pos().y())
         (boardx, boardy) = self.goMapToBorad(self.parent.thisGame.x, self.parent.thisGame.x)
-        self.parent.coordLabel.setText("mouse coordinate: %d,%d      board coordinate: %d,%d      go coordinate: %d,%d" %(e.pos().x(), e.pos().y(), boardx, boardy, self.parent.thisGame.x, self.parent.thisGame.y))
+        self.parent.coordLabel.setText("application coordinate: %d,%d      board coordinate: %d,%d      go coordinate: %d,%d" %(e.pos().x(), e.pos().y(), boardx, boardy, self.parent.thisGame.x, self.parent.thisGame.y))
         if (self.parent.thisGame.x, self.parent.thisGame.y) != (self.tmpx, self.tmpy):
             self.tmpx = self.parent.thisGame.x
             self.tmpy = self.parent.thisGame.y
             self.update()
     
     def mousePressEvent(self, e):
-        if e.button() == Qt.LeftButton and self.parent.mode == "free":
+        px, py = self.posMapToGo(e.pos().x(), e.pos().y())
+        hasStone = (px, py) in self.parent.thisGame.stepsGoDict.keys()
+        
+        if e.button() == Qt.LeftButton and self.parent.mode == "free" and not hasStone:
             if self.parent.stepPoint != len(self.parent.thisGame.stepsGo):
                 self.parent.restartFreeAndTestMode()
-            self.parent.thisGame.x, self.parent.thisGame.y = self.posMapToGo(e.pos().x(), e.pos().y())
+            self.parent.thisGame.x, self.parent.thisGame.y = px, py
             moveSuccess, deadChessNum = self.parent.thisGame.makeStep()
             if moveSuccess:
                 self.parent.stepPoint += 1
@@ -73,10 +76,10 @@ class board(QWidget):
                 self.update()
                 self.parent.makeSound(moveSuccess, deadChessNum)
                 
-        elif e.button() == Qt.LeftButton and self.parent.mode == "review":
+        elif e.button() == Qt.LeftButton and self.parent.mode == "review" and not hasStone:
             self.parent.startTestMode()
             self.parent.thisGame.stepNum = 0
-            self.parent.thisGame.x, self.parent.thisGame.y = self.posMapToGo(e.pos().x(), e.pos().y())
+            self.parent.thisGame.x, self.parent.thisGame.y = px, py
             moveSuccess, deadChessNum = self.parent.thisGame.makeStep()
             if moveSuccess:
                 self.parent.stepPoint += 1
@@ -84,10 +87,10 @@ class board(QWidget):
                 self.update()
                 self.parent.makeSound(moveSuccess, deadChessNum)
                 
-        elif e.button() == Qt.LeftButton and self.parent.mode == "test":
+        elif e.button() == Qt.LeftButton and self.parent.mode == "test" and not hasStone:
             if self.parent.stepPoint != len(self.parent.thisGame.stepsGo):
                 self.parent.restartFreeAndTestMode()
-            self.parent.thisGame.x, self.parent.thisGame.y = self.posMapToGo(e.pos().x(), e.pos().y())
+            self.parent.thisGame.x, self.parent.thisGame.y = px, py
             moveSuccess, deadChessNum = self.parent.thisGame.makeStep()
             if moveSuccess:
                 self.parent.stepPoint += 1
@@ -95,9 +98,9 @@ class board(QWidget):
                 self.update()
                 self.parent.makeSound(moveSuccess, deadChessNum)
             
-        elif e.button() == Qt.LeftButton and self.parent.mode == "ai":
+        elif e.button() == Qt.LeftButton and self.parent.mode == "ai" and not hasStone:
             if self.parent.thisGame.goColor == self.parent.peopleColor:
-                self.parent.thisGame.x, self.parent.thisGame.y = self.posMapToGo(e.pos().x(), e.pos().y())
+                self.parent.thisGame.x, self.parent.thisGame.y = px, py
                 moveSuccess, deadChessNum = self.parent.thisGame.makeStep()
                 if moveSuccess:
                     self.parent.stepPoint += 1
@@ -125,6 +128,10 @@ class board(QWidget):
                 count = self.parent.thisGame.stepsGoDict[(x, y)][1]
                 if self.checkClearCount((x, y)):
                     p.setPen(QPen(col_tmp))
+                    font = p.font()
+                    #font.setPointSize(12)
+                    font.setBold(True)
+                    p.setFont(font)
                     rect = QRect(x2-15, y2-15, 30, 30)
                     p.drawText(rect, Qt.AlignCenter, str(count))
         
