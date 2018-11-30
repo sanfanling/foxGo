@@ -90,6 +90,8 @@ class mainWindow(QWidget):
         self.aboutQt.triggered.connect(self.aboutQt_)
         self.aboutApp.triggered.connect(self.aboutApp_)
         
+        self.passAction.triggered.connect(self.passAction_)
+        
         self.styleGroup.triggered.connect(self.changeBoardStyle)
         self.withCoordinate.toggled.connect(self.withCoordinate_)
         
@@ -190,12 +192,12 @@ class mainWindow(QWidget):
         self.otherButton.setEnabled(False)
         otherMenu = QMenu(self)
         self.passAction = QAction("Pass", self)
-        self.resignAction = QAction("Resign", self)
+        #self.resignAction = QAction("Resign", self)
         self.replayAction = QAction("Replay", self)
         self.estimateAction = QAction("Estimate", self)
         self.quitAction = QAction("Quit", self)
         otherMenu.addAction(self.passAction)
-        otherMenu.addAction(self.resignAction)
+        #otherMenu.addAction(self.resignAction)
         otherMenu.addAction(self.replayAction)
         otherMenu.addAction(self.estimateAction)
         otherMenu.addAction(self.quitAction)
@@ -307,11 +309,13 @@ class mainWindow(QWidget):
             self.waitAi.command = "play {0} {1}\n".format(self.peopleColor, t)
             self.waitAi.run()
         elif m == "pass":
+            self.thisGame.changeColor()
             self.waitAi.command = "play {0} pass\n".format(self.peopleColor)
+            self.waitAi.run()
         elif m == "quit":
             self.goSocket.close()
             self.process.communicate("quit\n")
-            self.startFreeMode()
+            self.newGame_()
         elif m == "clear_board":
             self.waitAi.command = "clear_board\n"
             self.waitAi.run()
@@ -322,7 +326,7 @@ class mainWindow(QWidget):
     def aiMessage(self, message):
         print(message)
         if message.lower() == "pass":
-            pass
+            self.thisGame.changeColor()
         elif message.lower() == "resign":
             QMessageBox.information(self, "Game result", "Congratulations, you win this game!")
         elif message == "":
@@ -336,6 +340,7 @@ class mainWindow(QWidget):
             self.board.update()
             self.makeSound(moveSuccess, deadChessNum)
             self.thisGame.changeColor()
+        
     
     def startFreeMode(self):
         self.mode = "free"
@@ -493,10 +498,10 @@ class mainWindow(QWidget):
         elif self.mode == "review":
             pass # real pass
         else:
-            pass # communicate with ai
+            self.communicateAi("pass")
     
     def quitAction_(self):
-        pass #quit gnugo and end the ai game
+        self.communicateAi("quit")
         
     
     def reviewMove(self):

@@ -17,6 +17,7 @@ class go:
     def makeStepSafe(self):
         deadList = self.checkEnemyBlockBreath(self.x, self.y, dict(self.stepsGoDict), self.goColor)
         deadListLen = len(deadList)
+        self.stepNum += 1
         if deadListLen == 0:
             #print("review模式：无死棋")
             #self.stepsGoEasy.append((self.x, self.y))

@@ -1,5 +1,4 @@
 separate GTP commands
 optimize goEngine
 add "pass", "resign" in program
-fix the bug of showing hand count in ai mode
 check the error of establishing an existed socket
