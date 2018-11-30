@@ -334,12 +334,12 @@ class mainWindow(QWidget):
         else:
             self.thisGame.x, self.thisGame.y = self.fromGtpCoordinate(message)
             print("AI move: {0},{1}".format(self.thisGame.x, self.thisGame.y))
-            moveSuccess , deadChessNum = self.thisGame.makeStepSafe()
+            moveSuccess , deadChessNum = self.thisGame.makeStep()
             self.stepPoint += 1
             self.showStepsCount(True)
             self.board.update()
             self.makeSound(moveSuccess, deadChessNum)
-            self.thisGame.changeColor()
+            #self.thisGame.changeColor()
         
     
     def startFreeMode(self):

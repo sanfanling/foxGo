@@ -6,7 +6,6 @@ class go:
     def __init__(self):
         self.stepsGo = []
         self.stepsGoDict = {} #records any existed chesses on board, with chess color info, can append and remove step
-        self.stepsGo_Test = []
         self.stepsGoEasy_blackTmp = []
         self.stepsGoEasy_whiteTmp = []
         self.stepNum = 0
@@ -17,7 +16,6 @@ class go:
     def makeStepSafe(self):
         deadList = self.checkEnemyBlockBreath(self.x, self.y, dict(self.stepsGoDict), self.goColor)
         deadListLen = len(deadList)
-        self.stepNum += 1
         if deadListLen == 0:
             #print("review模式：无死棋")
             #self.stepsGoEasy.append((self.x, self.y))
