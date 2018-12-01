@@ -124,23 +124,38 @@ class board(QWidget):
             (x2, y2) = self.goMapToBorad(x, y)
             p.drawPixmap(x2-15, y2-15, pix)
             
-            if self.parent.showHands.isChecked():
+            if self.parent.stepNumberAll.isChecked():
                 count = self.parent.thisGame.stepsGoDict[(x, y)][1]
                 if self.checkClearCount((x, y)):
                     p.setPen(QPen(col_tmp))
                     font = p.font()
-                    #font.setPointSize(12)
                     font.setBold(True)
                     p.setFont(font)
                     rect = QRect(x2-15, y2-15, 30, 30)
                     p.drawText(rect, Qt.AlignCenter, str(count))
+                    
+            elif self.parent.stepNumberCurrent.isChecked():
+                count = self.parent.thisGame.stepsGoDict[(x, y)][1]
+                _x1, _y1 = list(self.parent.thisGame.stepsGoDict.keys())[-1]
+                _x1, _y1 = self.goMapToBorad(_x1, _y1)
         
         if len(self.parent.thisGame.stepsGoDict) != 0:
             _x, _y = list(self.parent.thisGame.stepsGoDict.keys())[-1]
             _x, _y = self.goMapToBorad(_x, _y)
-            tp = QPixmap("res/current.png")
-            #p.setBrush(QBrush(Qt.red, Qt.SolidPattern))
-            p.drawPixmap(_x-15, _y-15, tp)
+            if self.parent.stepNumberCurrent.isChecked():
+                if list(self.parent.thisGame.stepsGoDict.values())[-1][0] == "black":
+                    current_cl = Qt.white
+                else:
+                    current_cl = Qt.black
+                p.setPen(QPen(current_cl))
+                font = p.font()
+                font.setBold(True)
+                p.setFont(font)
+                rect = QRect(_x-15, _y-15, 30, 30)
+                p.drawText(rect, Qt.AlignCenter, str(count))
+            else:
+                tp = QPixmap("res/current.png")
+                p.drawPixmap(_x-15, _y-15, tp)
             
         if (self.parent.thisGame.x, self.parent.thisGame.y) not in self.parent.thisGame.stepsGoDict.keys() and self.inBoard:
             (x1, y1) = self.goMapToBorad(self.parent.thisGame.x, self.parent.thisGame.y)

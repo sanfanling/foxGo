@@ -37,10 +37,7 @@ class mainWindow(QWidget):
             self.saveAs = False
         self.address = cf.get("Gnugo", "address")
         self.port = cf.get("Gnugo", "port")
-        if cf.get("Board", "handcounts").lower() == "true":
-            self.handcounts = True
-        else:
-            self.handcounts = False
+        self.stepNumber = cf.get("Board", "stepnumber")
         self.style = cf.get("Board", "style")
         if cf.get("Board", "coordinate").lower() == "true":
             self.coordinate = True
@@ -96,7 +93,8 @@ class mainWindow(QWidget):
         self.styleGroup.triggered.connect(self.changeBoardStyle)
         self.withCoordinate.toggled.connect(self.withCoordinate_)
         
-        self.showHands.triggered.connect(self.board.update)
+        self.stepNumberAll.triggered.connect(self.board.update)
+        self.stepNumberCurrent.triggered.connect(self.board.update)
         
     def setUi(self):        
         self.menuBar = QMenuBar(self)
@@ -117,16 +115,36 @@ class mainWindow(QWidget):
         self.quit = QAction("Quit")
         gameMenu.addAction(self.quit)
         
-        dispalyMenu = self.menuBar.addMenu("Display")
-        self.showHands = QAction("Handcounts")
-        self.showHands.setCheckable(True)
-        self.showHands.setChecked(self.handcounts)
-        dispalyMenu.addAction(self.showHands)
+        displayMenu = self.menuBar.addMenu("Display")
+        
         self.withCoordinate = QAction("Coordinate")
         self.withCoordinate.setCheckable(True)
         self.withCoordinate.setChecked(self.coordinate)
-        dispalyMenu.addAction(self.withCoordinate)
-        boardStyleMenu = dispalyMenu.addMenu("Board style")
+        displayMenu.addAction(self.withCoordinate)
+        
+        stepNumberMenu = displayMenu.addMenu("Step number")
+        self.stepNumberGroup = QActionGroup(self)
+        self.stepNumberAll = QAction("All")
+        self.stepNumberAll.setCheckable(True)
+        self.stepNumberCurrent = QAction("Current")
+        self.stepNumberCurrent.setCheckable(True)
+        self.stepNumberHide = QAction("Hide")
+        self.stepNumberHide.setCheckable(True)
+        self.stepNumberGroup.addAction(self.stepNumberAll)
+        self.stepNumberGroup.addAction(self.stepNumberCurrent)
+        self.stepNumberGroup.addAction(self.stepNumberHide)
+        if self.stepNumber == "all":
+            self.stepNumberAll.setChecked(True)
+        elif self.stepNumber == "current":
+            self.stepNumberCurrent.setChecked(True)
+        else:
+            self.stepNumberHide.setChecked(True)
+        stepNumberMenu.addAction(self.stepNumberAll)
+        stepNumberMenu.addAction(self.stepNumberCurrent)
+        stepNumberMenu.addSeparator()
+        stepNumberMenu.addAction(self.stepNumberHide)
+        
+        boardStyleMenu = displayMenu.addMenu("Board style")
         self.styleGroup = QActionGroup(self)
         self.boardStyle1 = QAction("Style1")
         self.boardStyle2 = QAction("Style2")
@@ -597,7 +615,6 @@ class mainWindow(QWidget):
                     soundFile = "res/sound/103.wav"
         self.stoneSound.setSource(QUrl.fromLocalFile(soundFile))
         self.stoneSound.play()
-        #sound.play()
     
     def settingAction_(self):
         self.configDialog = configration()
@@ -698,10 +715,12 @@ class mainWindow(QWidget):
         
         cf.set("Gnugo", "address", self.address)
         cf.set("Gnugo", "port", self.port)
-        if self.showHands.isChecked():
-            cf.set("Board", "handcounts", "True")
+        if self.stepNumberAll.isChecked():
+            cf.set("Board", "stepnumber", "all")
+        elif self.stepNumberCurrent.isChecked():
+            cf.set("Board", "stepnumber", "current")
         else:
-            cf.set("Board", "handcounts", "False")
+            cf.set("Board", "stepnumber", "hide")
         if self.boardStyle1.isChecked():
             cf.set("Board", "style", "style1")
         elif self.boardStyle2.isChecked():

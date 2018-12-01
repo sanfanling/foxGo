@@ -44,7 +44,7 @@ configContent = """
                 port = 5522
                 
                 [Board]
-                handcounts = False
+                stepnumber = hide
                 style = style1
                 coordinate = False
                 
