@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
-from PyQt5.QtMultimedia import QSound
+from PyQt5.QtMultimedia import QSoundEffect
 import os
 import goEngine
 import sgfData
@@ -55,6 +55,7 @@ class mainWindow(QWidget):
         else:
             self.effect = False
         
+        self.stoneSound = QSoundEffect(self)
         self.setFocusPolicy(Qt.StrongFocus)
         self.setMouseTracking(True)
         self.setWindowTitle("foxGo")
@@ -594,8 +595,9 @@ class mainWindow(QWidget):
                     soundFile = "res/sound/104.wav"
                 else:
                     soundFile = "res/sound/103.wav"
-        sound = QSound(soundFile, self)
-        sound.play()
+        self.stoneSound.setSource(QUrl.fromLocalFile(soundFile))
+        self.stoneSound.play()
+        #sound.play()
     
     def settingAction_(self):
         self.configDialog = configration()
