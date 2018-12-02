@@ -14,7 +14,7 @@ class cyberoro(websgfUi):
     def __init__(self, parent = None):
         super().__init__()
         self.setWindowIcon(QIcon("res/logo.png"))
-        self.setWindowTitle("Download sgf files from cyberoro")
+        self.setWindowTitle(self.tr("Download sgf files from cyberoro"))
         self.listView.horizontalHeader().resizeSection(0, 50)
         self.listView.horizontalHeader().resizeSection(1, 260)
         self.listView.horizontalHeader().resizeSection(2, 300)
@@ -114,7 +114,7 @@ class cyberoro(websgfUi):
     def download(self):
         if len(self.getDownloadList()) == 0:
             b = QMessageBox(self)
-            b. setText("No items selected!")
+            b. setText(self.tr("No items selected!"))
             b.exec_()
         else:
             for i in self.getDownloadList():
@@ -128,7 +128,7 @@ class cyberoro(websgfUi):
                     continue
                 elif os.path.exists(fileName) and not self.autoSkip:
                     if self.saveAs:
-                        re = QFileDialog.getSaveFileName(self, "Save as", fileName, "Go records file(*.sgf)")
+                        re = QFileDialog.getSaveFileName(self, self.tr("Save as"), fileName, self.tr("Go records file(*.sgf)"))
                         tmpfile = re[0]
                         if tmpfile == "":
                             continue
@@ -149,7 +149,7 @@ class cyberoro(websgfUi):
                     f.write(sgf)
                     f.close()
             b = QMessageBox(self)
-            b. setText("Download mission finished!")
+            b. setText(self.tr("Download mission finished!"))
             b.exec_()
         
 if __name__ == "__main__":

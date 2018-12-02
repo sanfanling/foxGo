@@ -14,19 +14,19 @@ class websgfUi(QWidget):
         self.listView.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.listView.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.listView.setSelectionMode(QAbstractItemView.SingleSelection)
-        header = ["Select", "Game", "Result", "Date"]
+        header = [self.tr("Select"), self.tr("Game"), self.tr("Result"), self.tr("Date")]
         self.listView.setHorizontalHeaderLabels(header)
         #self.listView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         
         
         hlayout_1 = QHBoxLayout(None)
-        self.previous10Page = QPushButton("Previous 10 page", self)
-        self.previousPage = QPushButton("Previous page", self)
-        self.pageLabel = QLabel("Go to page:", self)
+        self.previous10Page = QPushButton(self.tr("Previous 10 page"), self)
+        self.previousPage = QPushButton(self.tr("Previous page"), self)
+        self.pageLabel = QLabel(self.tr("Go to page:"), self)
         self.pageLabel.setAlignment(Qt.AlignRight)
         self.pageNum = QSpinBox(self)
-        self.nextPage = QPushButton("Next page", self)
-        self.next10Page = QPushButton("Next 10 page", self)
+        self.nextPage = QPushButton(self.tr("Next page"), self)
+        self.next10Page = QPushButton(self.tr("Next 10 page"), self)
         hlayout_1.addWidget(self.previous10Page)
         hlayout_1.addWidget(self.previousPage)
         hlayout_1.addWidget(self.pageLabel)
@@ -35,8 +35,8 @@ class websgfUi(QWidget):
         hlayout_1.addWidget(self.next10Page)
         
         hlayout_2 = QHBoxLayout(None)
-        self.downloadButton = QPushButton("Downlaod", self)
-        self.quitButton = QPushButton("Quit", self)
+        self.downloadButton = QPushButton(self.tr("Downlaod"), self)
+        self.quitButton = QPushButton(self.tr("Quit"), self)
         hlayout_2.addWidget(self.downloadButton)
         hlayout_2.addWidget(self.quitButton)
         hlayout_2.setContentsMargins(400, 0, 0, 0)
