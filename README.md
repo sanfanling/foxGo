@@ -4,12 +4,13 @@
 
 ### Dependency:
 * python >= 3.5
+* PyQt5 (python and Qt5 binding)
 * BeautifulSoup4
 * gnugo (if AI mode needed)
 
 ### Run:
 * navigate to source dir in console
-* python foxGo.py
+* type: `python foxGo.py` in console to run the application
 
 ### Function details:
 * support sgf file importing
