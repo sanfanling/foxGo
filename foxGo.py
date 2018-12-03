@@ -67,7 +67,7 @@ if not os.path.exists(os.path.expanduser("~/.config/foxGo.conf")):
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
-	translator = QTranslator()
+	translator = QTranslator(app)
 	translator.load(QLocale(), "foxGo", "_", "ts/", ".qm")
 	app.installTranslator(translator)
 	w = mainWindow()

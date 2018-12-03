@@ -590,7 +590,7 @@
     <message>
         <location filename="../websgfUi.py" line="17"/>
         <source>Select</source>
-        <translation>搜索</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <location filename="../websgfUi.py" line="17"/>

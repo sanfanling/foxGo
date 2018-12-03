@@ -41,6 +41,7 @@ class sinawq(websgfUi):
         self.previous10Page.clicked.connect(self.gotoPrevious10Page)
         self.downloadButton.clicked.connect(self.download)
         self.contentThread.finished.connect(self.showContent)
+
     
     def changeButtonStatus(self):
         if self.parser.pageLimited - self.parser.currentPage > 0:
