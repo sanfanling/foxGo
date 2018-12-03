@@ -1,26 +1,26 @@
 # foxGo
 
-foxGo is a Go program which is written by pyqt5, running under Linux environment.
+## foxGo is a Go program which is written by pyqt5, running under Linux environment.
 
-Dependency:
-  1. python >= 3.5
-  2. BeautifulSoup4
-  3. gnugo (if AI mode needed)
+### Dependency:
+* python >= 3.5
+* BeautifulSoup4
+* gnugo (if AI mode needed)
 
-Run:
-  1. navigate to source dir in console
-  2. python foxGo.py
+### Run:
+* navigate to source dir in console
+* python foxGo.py
 
-Function details:
-  1. support sgf file importing
-  2. 4 modes available (free, test, variation, AI)
-  3. support comments from sgf file
-  4. support sina weiqi and tx weiqi sgf files downloading
-  5. fast and effecient local sgf file search
-  6. support print function
+### Function details:
+* support sgf file importing
+* 4 modes available (free, test, variation, AI)
+* support comments from sgf file
+* support sina weiqi, tx weiqi and Cyberoro sgf files downloading
+* fast and effecient local sgf file search
+* support print function
 
-Thanks to:
-  1. jtauber: provide effecient sgf parser
-  2. Alice Xu: logo designer
+### Thanks to:
+* jtauber: provide effecient sgf parser
+* Alice Xu: logo designer
 
-PLEASE NOTE: IF ERROR OCCURS ONCE RUNNING, TRY DEL YOUR CONFIG FILE ($HOME/.config/foxGo.conf), SINCE THE WHOLE APPLICATION IS UNDER DEVELOPING
+***PLEASE NOTE: IF ERROR OCCURS ONCE RUNNING, TRY DEL YOUR CONFIG FILE ($HOME/.config/foxGo.conf), SINCE THE WHOLE APPLICATION IS UNDER DEVELOPING***
