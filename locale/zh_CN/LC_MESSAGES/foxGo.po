@@ -1,0 +1,435 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0.0\n"
+"Report-Msgid-Bugs-To: xujia19@outlook.com\n"
+"POT-Creation-Date: 2018-12-05 21:23+0800\n"
+"PO-Revision-Date: 2018-12-05 21:30+0800\n"
+"Last-Translator: sanfanling <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: txwq.py:18
+msgid "Download sgf files from tx weiqi"
+msgstr "从腾讯围棋下载棋谱"
+
+#: txwq.py:119 sinawq.py:116 cyberoro.py:117
+msgid "No items selected!"
+msgstr "尚未选中任何棋谱！"
+
+#: txwq.py:133 sinawq.py:129 cyberoro.py:131
+msgid "Save as"
+msgstr "另存为"
+
+#: txwq.py:133 sinawq.py:129 mainWindow.py:445 cyberoro.py:131
+msgid "Go records file(*.sgf)"
+msgstr "棋谱记录文件(*.sgf)"
+
+#: txwq.py:154 sinawq.py:150 cyberoro.py:152
+msgid "Download mission finished!"
+msgstr "下载任务完成！"
+
+#: startAiDialog.py:21
+msgid "Your color:"
+msgstr "您选择执："
+
+#: startAiDialog.py:22
+msgid "Black"
+msgstr "黑棋"
+
+#: startAiDialog.py:24
+msgid "White"
+msgstr "白棋"
+
+#: startAiDialog.py:30
+msgid "Gnugo level:"
+msgstr "Gnugo水平："
+
+#: startAiDialog.py:38
+msgid "Set komi:"
+msgstr "设置贴目："
+
+#: startAiDialog.py:47
+msgid "Start Server"
+msgstr "启动服务"
+
+#: startAiDialog.py:49 configration.py:24
+msgid "OK"
+msgstr "确认"
+
+#: startAiDialog.py:51 configration.py:25
+msgid "Cancel"
+msgstr "取消"
+
+#: startAiDialog.py:72
+msgid "Server started"
+msgstr "服务已启动"
+
+#: startAiDialog.py:77
+msgid "Starting..."
+msgstr "服务启动中..."
+
+#: sinawq.py:17
+msgid "download sgf files from sina weiqi"
+msgstr "从新浪围棋下载棋谱文件"
+
+#: searchLocal.py:18
+msgid "Add label"
+msgstr "增加标签"
+
+#: searchLocal.py:19
+msgid "Del label"
+msgstr "删除标签"
+
+#: searchLocal.py:34
+msgid "Search Label"
+msgstr "搜索标签"
+
+#: searchLocal.py:52
+msgid "Select range:"
+msgstr "选择范围："
+
+#: searchLocal.py:54 searchLocal.py:125 searchLocal.py:201 mainWindow.py:127
+msgid "All"
+msgstr "全部"
+
+#: searchLocal.py:61
+msgid "Search:"
+msgstr "搜索："
+
+#: searchLocal.py:74
+msgid "Title"
+msgstr "标题"
+
+#: searchLocal.py:74
+msgid "From"
+msgstr "来源"
+
+#: searchLocal.py:98
+msgid "Search local sgf files"
+msgstr "搜索本地棋谱文件"
+
+#: searchLocal.py:113
+msgid "Open"
+msgstr "打开"
+
+#: searchLocal.py:114 mainWindow.py:115 mainWindow.py:217 websgfUi.py:39
+msgid "Quit"
+msgstr "退出"
+
+#: searchLocal.py:142
+msgid "Add a label"
+msgstr "增加一个标签"
+
+#: searchLocal.py:142
+msgid "Key words of label:"
+msgstr "标签关键词："
+
+#: searchLocal.py:153
+msgid "Del a label"
+msgstr "删除一个标签"
+
+#: searchLocal.py:153
+msgid "Please choose the label:"
+msgstr "请选择一个标签："
+
+#: mainWindow.py:102 websgfUi.py:17
+msgid "Game"
+msgstr "棋局"
+
+#: mainWindow.py:103
+msgid "New"
+msgstr "新建"
+
+#: mainWindow.py:104
+msgid "Open..."
+msgstr "打开..."
+
+#: mainWindow.py:105
+msgid "AI mode (gnugo)"
+msgstr "AI模式(gnugo)"
+
+#: mainWindow.py:110
+msgid "Print..."
+msgstr "打印..."
+
+#: mainWindow.py:111
+msgid "Preview..."
+msgstr "预览..."
+
+#: mainWindow.py:118
+msgid "Display"
+msgstr "显示"
+
+#: mainWindow.py:120
+msgid "Coordinate"
+msgstr "棋谱坐标"
+
+#: mainWindow.py:125
+msgid "Step number"
+msgstr "手数"
+
+#: mainWindow.py:129
+msgid "Current"
+msgstr "当前"
+
+#: mainWindow.py:131
+msgid "Hide"
+msgstr "隐藏"
+
+#: mainWindow.py:147
+msgid "Board style"
+msgstr "棋盘风格"
+
+#: mainWindow.py:162
+msgid "Sound"
+msgstr "声音"
+
+#: mainWindow.py:163
+msgid "Music"
+msgstr "音乐"
+
+#: mainWindow.py:166
+msgid "Sound Effect"
+msgstr "声效"
+
+#: mainWindow.py:172
+msgid "Web sgf"
+msgstr "网络棋谱"
+
+#: mainWindow.py:173
+msgid "Download from Tx Weiqi..."
+msgstr "从腾讯围棋下载棋谱..."
+
+#: mainWindow.py:174
+msgid "Download from Sina Weiqi..."
+msgstr "从新浪围棋下载棋谱..."
+
+#: mainWindow.py:175
+msgid "Download from Cyberoro..."
+msgstr "从乌鹭网下载棋谱..."
+
+#: mainWindow.py:176
+msgid "Search local sgf..."
+msgstr "搜索本地棋谱文件..."
+
+#: mainWindow.py:183
+msgid "Configration"
+msgstr "设置"
+
+#: mainWindow.py:184
+msgid "Configrate foxGo..."
+msgstr "设置foxGo..."
+
+#: mainWindow.py:187
+msgid "Help"
+msgstr "帮助"
+
+#: mainWindow.py:188
+msgid "About foxGo..."
+msgstr "关于foxGo..."
+
+#: mainWindow.py:189
+msgid "About Qt..."
+msgstr "关于Qt..."
+
+#: mainWindow.py:202
+msgid "Back"
+msgstr "返回"
+
+#: mainWindow.py:210
+msgid "Ai mode options"
+msgstr "AI模式选项"
+
+#: mainWindow.py:213
+msgid "Pass"
+msgstr "放弃一手"
+
+#: mainWindow.py:215
+msgid "Replay"
+msgstr "重来"
+
+#: mainWindow.py:216
+msgid "Estimate"
+msgstr "评估盘面"
+
+#: mainWindow.py:249
+msgid "Comments"
+msgstr "解说"
+
+#: mainWindow.py:306
+msgid "Current mode: AI"
+msgstr "当前处于AI模式"
+
+#: mainWindow.py:350
+msgid "Game result"
+msgstr "比赛结果"
+
+#: mainWindow.py:350
+msgid "Congratulations, you win this game!"
+msgstr "恭喜，您获得了本局的胜利！"
+
+#: mainWindow.py:371
+msgid "Current mode: free"
+msgstr "当前处于自由模式"
+
+#: mainWindow.py:381
+msgid "Current mode: test"
+msgstr "当前处于试下模式"
+
+#: mainWindow.py:396
+msgid "Sfg file parse error"
+msgstr "棋谱文件解析错误"
+
+#: mainWindow.py:396
+msgid "It may be caused because of broken sfg file!"
+msgstr "这通常是由于棋谱文件损坏造成的！"
+
+#: mainWindow.py:401 mainWindow.py:434
+msgid "Current mode: Review"
+msgstr "当前处于打谱模式"
+
+#: mainWindow.py:416 mainWindow.py:428
+msgid "Game:"
+msgstr "比赛："
+
+#: mainWindow.py:417 mainWindow.py:428
+msgid "Date:"
+msgstr "日期："
+
+#: mainWindow.py:418 mainWindow.py:428
+msgid "Komi:"
+msgstr "贴目："
+
+#: mainWindow.py:419 mainWindow.py:428
+msgid "Result:"
+msgstr "结果："
+
+#: mainWindow.py:423 mainWindow.py:429
+msgid "Black:"
+msgstr "黑棋："
+
+#: mainWindow.py:424 mainWindow.py:429
+msgid "White:"
+msgstr "白棋："
+
+#: mainWindow.py:428 mainWindow.py:429
+msgid "N/A"
+msgstr "无"
+
+#: mainWindow.py:445
+msgid "Open a SGF file"
+msgstr "打开一个棋谱文件"
+
+#: mainWindow.py:567
+#, python-format
+msgid "Variation: %s"
+msgstr "变化图： %s"
+
+#: mainWindow.py:668
+msgid "About Qt"
+msgstr "关于Qt"
+
+#: mainWindow.py:671
+msgid "About foxGo"
+msgstr "关于foxGo"
+
+#: mainWindow.py:671
+msgid "Enjoy Go's magic with foxGo under Linux environment"
+msgstr "使用foxGo，在linux环境下享受围棋的快乐"
+
+#: cyberoro.py:17
+msgid "Download sgf files from cyberoro"
+msgstr "从乌鹭网下载棋谱"
+
+#: configration.py:16
+msgid "Configrate foxGo"
+msgstr "设置foxGo"
+
+#: configration.py:51
+msgid "Sgf path"
+msgstr "棋谱文件路径"
+
+#: configration.py:57
+msgid "Choose..."
+msgstr "选择..."
+
+#: configration.py:70
+msgid "Choose a directory to save SGF files"
+msgstr "请选择棋谱文件的保存目录"
+
+#: configration.py:80
+msgid "Download"
+msgstr "下载"
+
+#: configration.py:84
+msgid "Auto skip if the sgf file exists already"
+msgstr "当同名棋谱文件存在时，自动跳过"
+
+#: configration.py:85
+msgid "Ask user to saveas the existed sgf files"
+msgstr "询问是否覆盖同名棋谱文件"
+
+#: configration.py:86
+msgid "Auto cover the existed sgf files"
+msgstr "自动覆盖已存在的同名棋谱文件"
+
+#: configration.py:106
+msgid "Gnugo"
+msgstr "Gnugo"
+
+#: configration.py:110
+msgid "Server address:"
+msgstr "服务地址："
+
+#: configration.py:118
+msgid "Server port:"
+msgstr "服务端口："
+
+#: configration.py:124
+msgid "*This setting will take effect in next Ai mode startup"
+msgstr "*该设置项将在下次AI模式启动时生效"
+
+#: websgfUi.py:17
+msgid "Select"
+msgstr "选择"
+
+#: websgfUi.py:17
+msgid "Result"
+msgstr "结果"
+
+#: websgfUi.py:17
+msgid "Date"
+msgstr "日期"
+
+#: websgfUi.py:23
+msgid "Previous 10 page"
+msgstr "前10页"
+
+#: websgfUi.py:24
+msgid "Previous page"
+msgstr "前页"
+
+#: websgfUi.py:25
+msgid "Go to page:"
+msgstr "跳转至："
+
+#: websgfUi.py:28
+msgid "Next page"
+msgstr "后一页"
+
+#: websgfUi.py:29
+msgid "Next 10 page"
+msgstr "后10页"
+
+#: websgfUi.py:38
+msgid "Downlaod"
+msgstr "下载"

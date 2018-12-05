@@ -14,7 +14,7 @@
 
 ### Function details:
 * support sgf file importing
-* 4 modes available (free, test, variation, AI)
+* 5 modes available (free, test, review, variation, AI)
 * support comments from sgf file
 * support sina weiqi, tx weiqi and Cyberoro sgf files downloading
 * fast and effecient local sgf file search

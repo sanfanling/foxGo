@@ -18,16 +18,16 @@ class startAiDialog(QDialog):
         self.port = "5577"
         
         h1 = QHBoxLayout(None)
-        self.yourLabel = QLabel(self.tr("Your color:"), self)
-        self.blackStone = QRadioButton(self.tr("Black"), self)
+        self.yourLabel = QLabel(_("Your color:"), self)
+        self.blackStone = QRadioButton(_("Black"), self)
         self.blackStone.setChecked(True)
-        self.whiteStone = QRadioButton(self.tr("White"), self)
+        self.whiteStone = QRadioButton(_("White"), self)
         h1.addWidget(self.yourLabel)
         h1.addWidget(self.blackStone)
         h1.addWidget(self.whiteStone)
         
         h2 = QHBoxLayout(None)
-        self.levelLabel = QLabel(self.tr("Gnugo level:"), self)
+        self.levelLabel = QLabel(_("Gnugo level:"), self)
         self.gnuLevel = QSpinBox(self)
         self.gnuLevel.setRange(1, 10)
         self.gnuLevel.setValue(8)
@@ -35,7 +35,7 @@ class startAiDialog(QDialog):
         h2.addWidget(self.gnuLevel)
         
         h3 = QHBoxLayout(None)
-        self.komiLabel = QLabel(self.tr("Set komi:"), self)
+        self.komiLabel = QLabel(_("Set komi:"), self)
         self.komi = QSpinBox(self)
         self.komi.setEnabled(False)
         self.komi.setRange(0, 9)
@@ -44,11 +44,11 @@ class startAiDialog(QDialog):
         h3.addWidget(self.komi)
         
         h4 = QHBoxLayout(None)
-        self.startButton = QPushButton(self.tr("Start Server"), self)
+        self.startButton = QPushButton(_("Start Server"), self)
         buttonBox = QDialogButtonBox(self)
-        self.okButton = QPushButton(self.tr("OK"))
+        self.okButton = QPushButton(_("OK"))
         self.okButton.setEnabled(False)
-        self.cancelButton = QPushButton(self.tr("Cancel"))
+        self.cancelButton = QPushButton(_("Cancel"))
         buttonBox.addButton(self.okButton, QDialogButtonBox.AcceptRole)
         buttonBox.addButton(self.cancelButton, QDialogButtonBox.RejectRole)
         h4.addWidget(self.startButton)
@@ -69,12 +69,12 @@ class startAiDialog(QDialog):
     def serverStarted(self):
         self.goSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.goSocket.connect(("127.0.0.1", int(self.port)))
-        self.startButton.setText(self.tr("Server started"))
+        self.startButton.setText(_("Server started"))
         self.okButton.setEnabled(True)
     
     def startServer(self):
         self.startButton.setEnabled(False)
-        self.startButton.setText(self.tr("Starting..."))
+        self.startButton.setText(_("Starting..."))
         if self.blackStone.isChecked():
             cl = "black"
         else:

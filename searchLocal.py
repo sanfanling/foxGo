@@ -15,8 +15,8 @@ class myToolbar(QToolBar):
         super().__init__()
         self.setOrientation(Qt.Vertical)
         self.myMenu = QMenu()
-        self.addLabel = QAction(self.tr("Add label"), self)
-        self.delLabel = QAction(self.tr("Del label"), self)
+        self.addLabel = QAction(_("Add label"), self)
+        self.delLabel = QAction(_("Del label"), self)
         self.myMenu.addAction(self.addLabel)
         self.myMenu.addAction(self.delLabel)
         
@@ -31,7 +31,7 @@ class tagArea(QWidget):
         self.parent = parent
         h3 = QVBoxLayout(None)
         h3.setContentsMargins(0, 7, 0, 0)
-        self.quickLabel = QLabel(self.tr("Search Label"), self)
+        self.quickLabel = QLabel(_("Search Label"), self)
         self.quickLabel.setAlignment(Qt.AlignCenter)
         self.quickSearch = myToolbar(self)
         self.quickSearch.setOrientation(Qt.Vertical)
@@ -49,16 +49,16 @@ class searchArea(QWidget):
         self.parent = parent
         h1 = QHBoxLayout(None)
         h1.setContentsMargins(20, 0, 0, 0)
-        self.rangeLabel = QLabel(self.tr("Select range:"), self)
+        self.rangeLabel = QLabel(_("Select range:"), self)
         self.rangeCombo = QComboBox(self)
-        d = [self.tr("All")]
+        d = [_("All")]
         for i in glob.glob(os.path.join(self.parent.sgfPath, "*")):
             if os.path.isdir(i):
                 d.append(os.path.split(i)[-1])
         self.rangeCombo.addItems(d)
         self.dirList = d[1:]
         
-        self.searchLabel = QLabel(self.tr("Search:"), self)
+        self.searchLabel = QLabel(_("Search:"), self)
         self.searchBox = QLineEdit(self)
         self.searchBox.setClearButtonEnabled(True)
         h1.addWidget(self.rangeLabel)
@@ -71,7 +71,7 @@ class searchArea(QWidget):
         self.listView.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.listView.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.listView.setSelectionMode(QAbstractItemView.SingleSelection)
-        header = [self.tr("Title"), self.tr("From")]
+        header = [_("Title"), _("From")]
         self.listView.setHorizontalHeaderLabels(header)
         #self.listView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.listView.horizontalHeader().resizeSection(0, 550)
@@ -95,7 +95,7 @@ class searchLocal(QWidget):
                 self.labelList.append(j.strip())
         
         self.setWindowIcon(QIcon("res/logo.png"))
-        self.setWindowTitle(self.tr("Search local sgf files"))
+        self.setWindowTitle(_("Search local sgf files"))
         self.resize(730, 500)
         self.parent = parent
         self.sgfPath = parent.sgfPath
@@ -110,8 +110,8 @@ class searchLocal(QWidget):
         
         
         h5 = QHBoxLayout(None)
-        self.openButton = QPushButton(self.tr("Open"), self)
-        self.quitButton = QPushButton(self.tr("Quit"), self)
+        self.openButton = QPushButton(_("Open"), self)
+        self.quitButton = QPushButton(_("Quit"), self)
         h5.addStretch(10)
         h5.addWidget(self.openButton,1)
         h5.addWidget(self.quitButton,1)
@@ -122,7 +122,7 @@ class searchLocal(QWidget):
         
         self.setLayout(mainLayout)
         
-        self.showSgfItems(self.tr("All"))
+        self.showSgfItems(_("All"))
         
         self.quitButton.clicked.connect(self.close)
         self.searchArea.rangeCombo.currentTextChanged.connect(self.showSgfItems)
@@ -139,7 +139,7 @@ class searchLocal(QWidget):
         self.searchArea.searchBox.setText(action.text())
     
     def addLabel_(self):
-        name, ok= QInputDialog.getText(self, self.tr("Add a label"), self.tr("Key words of label:"))
+        name, ok= QInputDialog.getText(self, _("Add a label"), _("Key words of label:"))
         if ok and name != "":
             self.labelList.append(name)
             self.showLabel()
@@ -150,7 +150,7 @@ class searchLocal(QWidget):
             self.tagArea.quickSearch.addAction(QAction(i, self))
             
     def delLabel_(self):
-        name, ok = QInputDialog.getItem(self, self.tr("Del a label"), self.tr("Please choose the label:"), self.labelList, 0, False)
+        name, ok = QInputDialog.getItem(self, _("Del a label"), _("Please choose the label:"), self.labelList, 0, False)
         if ok:
             self.labelList.remove(name)
             self.showLabel()
@@ -198,7 +198,7 @@ class searchLocal(QWidget):
         self.searchArea.listView.clearContents()
         self.titleList = []
         row = 0
-        if t == self.tr("All"):
+        if t == _("All"):
             for i in self.searchArea.dirList:
                 path = os.path.join(self.sgfPath, i)
                 #print(path)

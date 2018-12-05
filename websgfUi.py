@@ -14,19 +14,19 @@ class websgfUi(QWidget):
         self.listView.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.listView.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.listView.setSelectionMode(QAbstractItemView.SingleSelection)
-        header = [self._("Select"), self._("Game"), self._("Result"), self._("Date")]
+        header = [_("Select"), _("Game"), _("Result"), _("Date")]
         self.listView.setHorizontalHeaderLabels(header)
         #self.listView.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         
         
         hlayout_1 = QHBoxLayout(None)
-        self.previous10Page = QPushButton(self._("Previous 10 page"), self)
-        self.previousPage = QPushButton(self._("Previous page"), self)
-        self.pageLabel = QLabel(self._("Go to page:"), self)
+        self.previous10Page = QPushButton(_("Previous 10 page"), self)
+        self.previousPage = QPushButton(_("Previous page"), self)
+        self.pageLabel = QLabel(_("Go to page:"), self)
         self.pageLabel.setAlignment(Qt.AlignRight)
         self.pageNum = QSpinBox(self)
-        self.nextPage = QPushButton(self._("Next page"), self)
-        self.next10Page = QPushButton(self._("Next 10 page"), self)
+        self.nextPage = QPushButton(_("Next page"), self)
+        self.next10Page = QPushButton(_("Next 10 page"), self)
         hlayout_1.addWidget(self.previous10Page)
         hlayout_1.addWidget(self.previousPage)
         hlayout_1.addWidget(self.pageLabel)
@@ -35,8 +35,8 @@ class websgfUi(QWidget):
         hlayout_1.addWidget(self.next10Page)
         
         hlayout_2 = QHBoxLayout(None)
-        self.downloadButton = QPushButton(self._("Downlaod"), self)
-        self.quitButton = QPushButton(self._("Quit"), self)
+        self.downloadButton = QPushButton(_("Downlaod"), self)
+        self.quitButton = QPushButton(_("Quit"), self)
         hlayout_2.addWidget(self.downloadButton)
         hlayout_2.addWidget(self.quitButton)
         hlayout_2.setContentsMargins(400, 0, 0, 0)
@@ -48,9 +48,6 @@ class websgfUi(QWidget):
         self.setLayout(mainLayout)
         
         self.quitButton.clicked.connect(self.close)
-    
-    def _(self, s):
-        return QCoreApplication.translate('websgfUi', s)
 
 
 if __name__ == "__main__":

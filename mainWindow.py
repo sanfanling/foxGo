@@ -99,36 +99,36 @@ class mainWindow(QWidget):
     def setUi(self):        
         self.menuBar = QMenuBar(self)
         
-        gameMenu = self.menuBar.addMenu(self.tr("Game"))
-        self.newGame = QAction(self.tr("New"))
-        self.fileOpen = QAction(self.tr("Open..."))
-        self.ai = QAction(self.tr("AI mode (gnugo)"))
+        gameMenu = self.menuBar.addMenu(_("Game"))
+        self.newGame = QAction(_("New"))
+        self.fileOpen = QAction(_("Open..."))
+        self.ai = QAction(_("AI mode (gnugo)"))
         gameMenu.addAction(self.newGame)
         gameMenu.addAction(self.fileOpen)
         gameMenu.addAction(self.ai)
         gameMenu.addSeparator()
-        self.printGo = QAction(self.tr("Print..."))
-        self.printGoPreview = QAction(self.tr("Preview..."))
+        self.printGo = QAction(_("Print..."))
+        self.printGoPreview = QAction(_("Preview..."))
         gameMenu.addAction(self.printGo)
         gameMenu.addAction(self.printGoPreview)
         gameMenu.addSeparator()
-        self.quit = QAction(self.tr("Quit"))
+        self.quit = QAction(_("Quit"))
         gameMenu.addAction(self.quit)
         
-        displayMenu = self.menuBar.addMenu(self.tr("Display"))
+        displayMenu = self.menuBar.addMenu(_("Display"))
         
-        self.withCoordinate = QAction(self.tr("Coordinate"))
+        self.withCoordinate = QAction(_("Coordinate"))
         self.withCoordinate.setCheckable(True)
         self.withCoordinate.setChecked(self.coordinate)
         displayMenu.addAction(self.withCoordinate)
         
-        stepNumberMenu = displayMenu.addMenu(self.tr("Step number"))
+        stepNumberMenu = displayMenu.addMenu(_("Step number"))
         self.stepNumberGroup = QActionGroup(self)
-        self.stepNumberAll = QAction(self.tr("All"))
+        self.stepNumberAll = QAction(_("All"))
         self.stepNumberAll.setCheckable(True)
-        self.stepNumberCurrent = QAction(self.tr("Current"))
+        self.stepNumberCurrent = QAction(_("Current"))
         self.stepNumberCurrent.setCheckable(True)
-        self.stepNumberHide = QAction(self.tr("Hide"))
+        self.stepNumberHide = QAction(_("Hide"))
         self.stepNumberHide.setCheckable(True)
         self.stepNumberGroup.addAction(self.stepNumberAll)
         self.stepNumberGroup.addAction(self.stepNumberCurrent)
@@ -144,7 +144,7 @@ class mainWindow(QWidget):
         stepNumberMenu.addSeparator()
         stepNumberMenu.addAction(self.stepNumberHide)
         
-        boardStyleMenu = displayMenu.addMenu(self.tr("Board style"))
+        boardStyleMenu = displayMenu.addMenu(_("Board style"))
         self.styleGroup = QActionGroup(self)
         self.boardStyle1 = QAction("Style1")
         self.boardStyle2 = QAction("Style2")
@@ -159,34 +159,34 @@ class mainWindow(QWidget):
         boardStyleMenu.addAction(self.boardStyle1)
         boardStyleMenu.addAction(self.boardStyle2)
         
-        soundMenu = self.menuBar.addMenu(self.tr("Sound"))
-        self.musicAction = QAction(self.tr("Music"))
+        soundMenu = self.menuBar.addMenu(_("Sound"))
+        self.musicAction = QAction(_("Music"))
         self.musicAction.setCheckable(True)
         self.musicAction.setChecked(self.music)
-        self.soundEffect = QAction(self.tr("Sound Effect"))
+        self.soundEffect = QAction(_("Sound Effect"))
         self.soundEffect.setCheckable(True)
         self.soundEffect.setChecked(self.effect)
         soundMenu.addAction(self.musicAction)
         soundMenu.addAction(self.soundEffect)
         
-        websgfMenu = self.menuBar.addMenu(self.tr("Web sgf"))
-        self.foxAction = QAction(self.tr("Download from Tx Weiqi..."))
-        self.sinaAction = QAction(self.tr("Download from Sina Weiqi..."))
-        self.cyberoroAction = QAction(self.tr("Download from Cyberoro..."))
-        self.searchAction = QAction(self.tr("Search local sgf..."))
+        websgfMenu = self.menuBar.addMenu(_("Web sgf"))
+        self.foxAction = QAction(_("Download from Tx Weiqi..."))
+        self.sinaAction = QAction(_("Download from Sina Weiqi..."))
+        self.cyberoroAction = QAction(_("Download from Cyberoro..."))
+        self.searchAction = QAction(_("Search local sgf..."))
         websgfMenu.addAction(self.foxAction)
         websgfMenu.addAction(self.sinaAction)
         websgfMenu.addAction(self.cyberoroAction)
         websgfMenu.addSeparator()
         websgfMenu.addAction(self.searchAction)
         
-        settingMenu = self.menuBar.addMenu(self.tr("Configration"))
-        self.settingAction = QAction(self.tr("Configrate foxGo..."))
+        settingMenu = self.menuBar.addMenu(_("Configration"))
+        self.settingAction = QAction(_("Configrate foxGo..."))
         settingMenu.addAction(self.settingAction)
         
-        helpMenu = self.menuBar.addMenu(self.tr("Help"))
-        self.aboutApp = QAction(self.tr("About foxGo..."))
-        self.aboutQt = QAction(self.tr("About Qt..."))
+        helpMenu = self.menuBar.addMenu(_("Help"))
+        self.aboutApp = QAction(_("About foxGo..."))
+        self.aboutQt = QAction(_("About Qt..."))
         helpMenu.addAction(self.aboutApp)
         helpMenu.addAction(self.aboutQt)
         
@@ -199,7 +199,7 @@ class mainWindow(QWidget):
         self.nextStep = QPushButton(">", self)
         self.next10Steps = QPushButton(">>", self)
         self.nextToEnd = QPushButton(">|", self)
-        self.backToPoint = QPushButton(self.tr("Back"), self)
+        self.backToPoint = QPushButton(_("Back"), self)
         self.backToPoint.setEnabled(False)
         self.stepsSlider = QSlider(self)
         self.stepsSlider.setTracking(True)
@@ -207,14 +207,14 @@ class mainWindow(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
         self.stepsSlider.setSizePolicy(sizePolicy)
         
-        self.otherButton = QPushButton(self.tr("Ai mode options"), self)
+        self.otherButton = QPushButton(_("Ai mode options"), self)
         self.otherButton.setEnabled(False)
         otherMenu = QMenu(self)
-        self.passAction = QAction(self.tr("Pass"), self)
-        #self.resignAction = QAction(self.tr(("Resign"), self)
-        self.replayAction = QAction(self.tr("Replay"), self)
-        self.estimateAction = QAction(self.tr("Estimate"), self)
-        self.quitAction = QAction(self.tr("Quit"), self)
+        self.passAction = QAction(_("Pass"), self)
+        #self.resignAction = QAction(_(("Resign"), self)
+        self.replayAction = QAction(_("Replay"), self)
+        self.estimateAction = QAction(_("Estimate"), self)
+        self.quitAction = QAction(_("Quit"), self)
         otherMenu.addAction(self.passAction)
         #otherMenu.addAction(self.resignAction)
         otherMenu.addAction(self.replayAction)
@@ -246,7 +246,7 @@ class mainWindow(QWidget):
         font2.setPointSize(10)
         self.gameInfo.setFont(font2)
         
-        self.commentLabel = QLabel(self.tr("Comments"), self)
+        self.commentLabel = QLabel(_("Comments"), self)
         self.commentBox = QTextBrowser(self)
         self.commentBox.setOpenLinks(False)
         vlayout.addWidget(self.playerLabel)
@@ -303,7 +303,7 @@ class mainWindow(QWidget):
             self.stepPoint = 0
             self.breakPoint = 0
             self.showStepsCount(True)
-            self.modeLabel.setText(self.tr("Now is in AI mode"))
+            self.modeLabel.setText(_("Current mode: AI"))
             self.thisGame = goEngine.go()
             self.board.update()
             self.waitAi = getOutputThread(self)
@@ -347,7 +347,7 @@ class mainWindow(QWidget):
         if message.lower() == "pass":
             self.thisGame.changeColor()
         elif message.lower() == "resign":
-            QMessageBox.information(self, self.tr("Game result"), self.tr("Congratulations, you win this game!"))
+            QMessageBox.information(self, _("Game result"), _("Congratulations, you win this game!"))
         elif message == "":
             self.communicateAi("genmove")
         else:
@@ -368,7 +368,7 @@ class mainWindow(QWidget):
         self.breakPoint = 0
         self.thisGame = goEngine.go()
         self.showStepsCount(True)
-        self.modeLabel.setText(self.tr("Now is in free mode"))
+        self.modeLabel.setText(_("Current mode: free"))
         self.otherButton.setEnabled(False)
     
     def restartFreeAndTestMode(self):
@@ -378,7 +378,7 @@ class mainWindow(QWidget):
     def startTestMode(self, vl = []):
         self.mode = "test"
         self.commentBox.clear()
-        self.modeLabel.setText(self.tr("Current mode: Test"))
+        self.modeLabel.setText(_("Current mode: test"))
         self.breakPoint = self.stepPoint
         self.stepsGo_original = list(self.thisGame.stepsGo)
         #self.clearLength = len(self.thisGame.stepsGoDict)
@@ -390,43 +390,48 @@ class mainWindow(QWidget):
         self.otherButton.setEnabled(False)
         
     def startReviewMode(self, f):
-        self.mode = "review"
-        self.commentBox.clear()
-        self.otherButton.setEnabled(False)
-        self.modeLabel.setText(self.tr("Current mode: Review"))
-        self.sgfEngine = sgfData.sgfData(f)
-        self.thisGame = goEngine.go()
-        self.thisGame.stepsGo = self.sgfEngine.getStepsData(self.sgfEngine.rest)
-        self.commentDict = self.sgfEngine.getCommentsData(self.sgfEngine.rest)
-        self.variations = self.sgfEngine.getVariations()
-        self.getPlayersInfo()
-        self.getGameInfo()
-        self.stepPoint = len(self.thisGame.stepsGo)
-        self.stepsCount.setRange(0, self.stepPoint)
-        self.stepsSlider.setRange(0, self.stepPoint)
-        self.showStepsCount()
-        self.reviewMove()
+        try:
+            self.sgfEngine = sgfData.sgfData(f)
+        except:
+            QMessageBox.critical(self, _("Sfg file parse error"), _("It may be caused because of broken sfg file!"))
+        else:
+            self.mode = "review"
+            self.commentBox.clear()
+            self.otherButton.setEnabled(False)
+            self.modeLabel.setText(_("Current mode: Review"))
+        
+            self.thisGame = goEngine.go()
+            self.thisGame.stepsGo = self.sgfEngine.getStepsData(self.sgfEngine.rest)
+            self.commentDict = self.sgfEngine.getCommentsData(self.sgfEngine.rest)
+            self.variations = self.sgfEngine.getVariations()
+            self.getPlayersInfo()
+            self.getGameInfo()
+            self.stepPoint = len(self.thisGame.stepsGo)
+            self.stepsCount.setRange(0, self.stepPoint)
+            self.stepsSlider.setRange(0, self.stepPoint)
+            self.showStepsCount()
+            self.reviewMove()
     
     def getGameInfo(self):
-        game = "{0} {1}\n\n".format(self.tr("Game:"), self.sgfEngine.getTitle())
-        date = "{0} {1}\n\n".format(self.tr("Date:"), self.sgfEngine.getDate())
-        komi = "{0} {1}\n\n".format(self.tr("Komi:"), self.sgfEngine.getKomi())
-        result = "{0} {1}\n\n".format(self.tr("Result:"), self.sgfEngine.getResult())
+        game = "{0} {1}\n\n".format(_("Game:"), self.sgfEngine.getTitle())
+        date = "{0} {1}\n\n".format(_("Date:"), self.sgfEngine.getDate())
+        komi = "{0} {1}\n\n".format(_("Komi:"), self.sgfEngine.getKomi())
+        result = "{0} {1}\n\n".format(_("Result:"), self.sgfEngine.getResult())
         self.gameInfo.setText(game + date + komi + result)
     
     def getPlayersInfo(self):
-        Pb = "{0} {1} {2}\n\n".format(self.tr("Black:"), self.sgfEngine.getBlackPlayer(), self.sgfEngine.getBlackPlayerDan())
-        Pw = "{0} {1} {2}\n\n".format(self.tr("White:"), self.sgfEngine.getWhitePlayer(), self.sgfEngine.getWhitePlayerDan())
+        Pb = "{0} {1} {2}\n\n".format(_("Black:"), self.sgfEngine.getBlackPlayer(), self.sgfEngine.getBlackPlayerDan())
+        Pw = "{0} {1} {2}\n\n".format(_("White:"), self.sgfEngine.getWhitePlayer(), self.sgfEngine.getWhitePlayerDan())
         self.playerLabel.setText(Pb+Pw)
     
     def initInfoLabel(self):
-        self.gameInfo.setText("{0}  {4}\n\n{1}  {4}\n\n{2}  {4}\n\n{3}  {4}\n\n".format(self.tr("Game:"), self.tr("Date:"), self.tr("Komi:"), self.tr("Result:"), self.tr("N/A")))
-        self.playerLabel.setText("{0}  {2}\n\n{1}  {2}\n\n".format(self.tr("Black:"), self.tr("White:"), self.tr("N/A")))
+        self.gameInfo.setText("{0}  {4}\n\n{1}  {4}\n\n{2}  {4}\n\n{3}  {4}\n\n".format(_("Game:"), _("Date:"), _("Komi:"), _("Result:"), _("N/A")))
+        self.playerLabel.setText("{0}  {2}\n\n{1}  {2}\n\n".format(_("Black:"), _("White:"), _("N/A")))
     
     def backToPoint_(self):
         self.mode = "review"
         self.commentBox.clear()
-        self.modeLabel.setText(self.tr("Current mode: Review"))
+        self.modeLabel.setText(_("Current mode: Review"))
         self.thisGame.stepsGo = self.stepsGo_original
         self.stepPoint = self.breakPoint
         self.breakPoint = 0
@@ -437,7 +442,7 @@ class mainWindow(QWidget):
         self.backToPoint.setEnabled(False)
     
     def getFile(self):
-        fileName, y = QFileDialog.getOpenFileName(self, self.tr("Open a SGF file"), self.sgfPath, self.tr("Go records file(*.sgf)"))
+        fileName, y = QFileDialog.getOpenFileName(self, _("Open a SGF file"), self.sgfPath, _("Go records file(*.sgf)"))
         if fileName:
             self.startReviewMode(fileName)
     
@@ -559,7 +564,7 @@ class mainWindow(QWidget):
             p += 1
             co = i[-1]
             url = "%d-%d" %(self.stepPoint, p)
-            title = self.tr("Variation: %s") %(url,)
+            title = _("Variation: %s") %(url,)
             text += '<a href="%s">%s</a> %s<br>' %(url, title, co)
         return text
             
@@ -660,10 +665,10 @@ class mainWindow(QWidget):
         self.searchBox.show()
     
     def aboutQt_(self):
-        QMessageBox.aboutQt(self, self.tr("About Qt"))
+        QMessageBox.aboutQt(self, _("About Qt"))
     
     def aboutApp_(self):
-        QMessageBox.about(self, self.tr("About foxGo"), self.tr("Enjoy Go's magic with foxGo under Linux environment"))
+        QMessageBox.about(self, _("About foxGo"), _("Enjoy Go's magic with foxGo under Linux environment"))
     
     def toGtpCoordinate(self, x, y):
         if x <= 8:

@@ -29,6 +29,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QTranslator, QLocale
 from mainWindow import mainWindow
 import sys, os
+import gettext
 
 # check the config file first
 
@@ -67,9 +68,11 @@ if not os.path.exists(os.path.expanduser("~/.config/foxGo.conf")):
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
-	translator = QTranslator(app)
-	translator.load(QLocale(), "foxGo", "_", "ts/", ".qm")
-	app.installTranslator(translator)
+	try:
+		gettext.translation("foxGo", "locale").install()
+	except:
+		pass
+    
 	w = mainWindow()
 	w.show()
 	sys.exit(app.exec_())
