@@ -89,6 +89,7 @@ class mainWindow(QWidget):
         self.aboutApp.triggered.connect(self.aboutApp_)
         
         self.passAction.triggered.connect(self.passAction_)
+        self.estimateAction.triggered.connect(self.estimateAction_)
         
         self.styleGroup.triggered.connect(self.changeBoardStyle)
         self.withCoordinate.toggled.connect(self.withCoordinate_)
@@ -316,7 +317,7 @@ class mainWindow(QWidget):
             else:
                 self.peopleColor = "white"
                 self.aiColor = "black"
-                self.communicateAi("genmove") # args = clear_board, estimate_score, genmove, play, pass, resign, quit
+                self.communicateAi("genmove") # args = clear_board, final_score, genmove, play, pass, resign, quit
             
     
     def communicateAi(self, m):
@@ -338,8 +339,8 @@ class mainWindow(QWidget):
         elif m == "clear_board":
             self.waitAi.command = "clear_board\n"
             self.waitAi.run()
-        elif m == "estimate_score":
-            self.waitAi.command = "estimate_score\n"
+        elif m == "final_score":
+            self.waitAi.command = "final_score\n"
             self.waitAi.run()
         
     def aiMessage(self, message):
@@ -350,6 +351,15 @@ class mainWindow(QWidget):
             QMessageBox.information(self, _("Game result"), _("Congratulations, you win this game!"))
         elif message == "":
             self.communicateAi("genmove")
+        elif "+" in message:
+            print(message)
+            c, score = message.split("+")
+            if c == "B":
+                p = _("Black")
+            else:
+                p = _("White")
+            final = p + _("leads") + score
+            QMessageBox.information(self, _("Game situation"), final)
         else:
             self.thisGame.x, self.thisGame.y = self.fromGtpCoordinate(message)
             print("AI move: {0},{1}".format(self.thisGame.x, self.thisGame.y))
@@ -526,6 +536,9 @@ class mainWindow(QWidget):
     
     def quitAction_(self):
         self.communicateAi("quit")
+    
+    def estimateAction_(self):
+        self.communicateAi("final_score")
         
     
     def reviewMove(self):
