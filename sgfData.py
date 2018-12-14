@@ -50,21 +50,36 @@ class sgfData:
     
     def getStepsData(self, iterator):
         stepList = []
+        haList = []
         j = 0
         for i in iterator:
+            if "AB" in i.properties:
+                haList = self.getHaData(i.properties["AB"])
+                continue
+            
             j += 1
             if "B" in i.properties:
                 goColor = "black"
                 xname = i.properties["B"][0][0]
                 yname = i.properties["B"][0][1]
-            else:
+            elif "W" in i.properties:
                 goColor = "white"
                 xname = i.properties["W"][0][0]
                 yname = i.properties["W"][0][1]
             x = ord(xname)-96
             y = ord(yname)-96
             stepList.append((j, goColor, x, y))
-        return stepList
+        return stepList, haList
+    
+    def getHaData(self, hal):
+        dl = []
+        for i in hal:
+            xname = i[0]
+            yname = i[1]
+            x = ord(xname)-96
+            y = ord(yname)-96
+            dl.append((x, y))
+        return dl
     
 
     def getCommentsData(self, iterator, variationComment = False):
@@ -90,7 +105,7 @@ class sgfData:
                 variationList = []
                 for j in i.variations[1:]:
                     v = self.recursionNode(j, [], 0)
-                    subList = self.getStepsData(v)
+                    subList = self.getStepsData(v)[0]
                     subComment = self.getCommentsData(v, True)
                     subList.append(subComment)
                     variationList.append(subList)

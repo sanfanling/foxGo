@@ -114,6 +114,10 @@ class board(QWidget):
         p = QPainter()
         p.begin(self)
         
+        for hax, hay in self.parent.thisGame.ha:
+            board_hax, board_hay =  self.goMapToBorad(hax, hay)
+            p.drawPixmap(board_hax-15, board_hay-15, QPixmap("res/blackStone.png"))
+        
         for x, y in list(self.parent.thisGame.stepsGoDict.keys()):
             if self.parent.thisGame.stepsGoDict[(x, y)][0] == "black":
                 pix = QPixmap("res/blackStone.png")

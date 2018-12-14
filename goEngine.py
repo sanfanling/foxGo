@@ -9,6 +9,7 @@ class go:
         self.stepsGoEasy_blackTmp = []
         self.stepsGoEasy_whiteTmp = []
         self.stepNum = 0
+        self.ha = []# handle HA != 0
         self.goColor = "black"
         self.x = 0
         self.y = 0

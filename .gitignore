@@ -4,6 +4,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 test-4.0.py
+*.sgf
 
 # C extensions
 *.so

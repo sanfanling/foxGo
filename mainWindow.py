@@ -411,7 +411,7 @@ class mainWindow(QWidget):
             self.modeLabel.setText(_("Current mode: Review"))
         
             self.thisGame = goEngine.go()
-            self.thisGame.stepsGo = self.sgfEngine.getStepsData(self.sgfEngine.rest)
+            self.thisGame.stepsGo, self.thisGame.ha = self.sgfEngine.getStepsData(self.sgfEngine.rest)
             self.commentDict = self.sgfEngine.getCommentsData(self.sgfEngine.rest)
             self.variations = self.sgfEngine.getVariations()
             self.getPlayersInfo()
@@ -543,6 +543,10 @@ class mainWindow(QWidget):
     
     def reviewMove(self):
         self.thisGame.stepsGoDict = {}
+        
+        for i in self.thisGame.ha:
+            self.thisGame.stepsGoDict[i] = ("black", 0)
+                
         tmpList = self.thisGame.stepsGo[:self.stepPoint]
         if len(tmpList) != 0:
             for i, c, x, y in tmpList:
