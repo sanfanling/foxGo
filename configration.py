@@ -8,6 +8,8 @@ from PyQt5.QtGui import *
 from configparser import ConfigParser
 import os, sys
 
+def _(x):
+    return x
 
 class configration(QDialog):
     
@@ -15,8 +17,10 @@ class configration(QDialog):
         super().__init__()
         self.setWindowTitle(_("Configrate foxGo"))
         self.setWindowIcon(QIcon("res/icon.png"))
+        #self.resize(100, 380)
         
         self.path = path(self)
+        self.music = music(self)
         self.download = download(self)
         self.gnugo = gnugo(self)
         
@@ -28,6 +32,7 @@ class configration(QDialog):
         
         mainLayout = QVBoxLayout(None)
         mainLayout.addWidget(self.path)
+        mainLayout.addWidget(self.music)
         mainLayout.addWidget(self.download)
         mainLayout.addWidget(self.gnugo)
         mainLayout.addSpacing(30)
@@ -40,7 +45,40 @@ class configration(QDialog):
         
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
+
+class music(QFrame):
+    
+    def __init__(self, parent):
+        super().__init__()
+        self.setFrameShape(QFrame.Box)
+        v1 = QVBoxLayout(None)
+        self.musicLabel = QLabel(_("Music"), self)
+        self.musicLabel.setAlignment(Qt.AlignCenter)
         
+        h1 = QHBoxLayout(None)
+        self.musicBox = QLineEdit(self)
+        self.musicBox.setReadOnly(True)
+        self.chooseMusic = QPushButton(_("Choose..."))
+        self.clearMusic = QPushButton("Clear")
+        h1.addWidget(self.musicBox)
+        h1.addWidget(self.chooseMusic)
+        h1.addWidget(self.clearMusic)
+        
+        v1.addWidget(self.musicLabel)
+        v1.addLayout(h1)
+        v1.addStretch(10)
+        
+        self.setLayout(v1)
+        
+        self.chooseMusic.clicked.connect(self.chooseMusic_)
+        self.clearMusic.clicked.connect(self.musicBox.clear)
+        
+    def chooseMusic_(self):
+        directory, ok = QFileDialog.getOpenFileName(self, _("Choose a wav file"), os.path.expanduser("~"), "Wave file (*.wav)")
+        if ok:
+            self.musicBox.setText(directory)
+
+
 
 class path(QFrame):
     

@@ -52,6 +52,7 @@ configContent = """
                 
                 [Sound]
                 music = False
+                musicpath =
                 effect = False
 		
                 [Tag]

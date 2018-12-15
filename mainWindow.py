@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
-from PyQt5.QtMultimedia import QSoundEffect
+from PyQt5.QtMultimedia import QSoundEffect, QSound
 import os
 import goEngine
 import sgfData
@@ -43,15 +43,19 @@ class mainWindow(QWidget):
             self.coordinate = True
         else:
             self.coordinate = False
-        if cf.get("Sound", "music").lower() == "true":
+        self.musicPath = cf.get("Sound", "musicpath")
+        if cf.get("Sound", "music").lower() == "true" and self.musicPath:
             self.music = True
         else:
             self.music = False
+        
         if cf.get("Sound", "effect").lower() == "true":
             self.effect = True
         else:
             self.effect = False
         
+        self.backgroundMusic = QSound(self.musicPath, self)
+        #self.backgroundMusic.setLoops(-1)
         self.stoneSound = QSoundEffect(self)
         self.setFocusPolicy(Qt.StrongFocus)
         self.setMouseTracking(True)
@@ -96,6 +100,8 @@ class mainWindow(QWidget):
         
         self.stepNumberAll.triggered.connect(self.board.update)
         self.stepNumberCurrent.triggered.connect(self.board.update)
+        
+        self.musicAction.toggled.connect(self.startMusic)
         
     def setUi(self):        
         self.menuBar = QMenuBar(self)
@@ -164,6 +170,8 @@ class mainWindow(QWidget):
         self.musicAction = QAction(_("Music"))
         self.musicAction.setCheckable(True)
         self.musicAction.setChecked(self.music)
+        if not self.musicPath:
+            self.musicAction.setEnabled(False)
         self.soundEffect = QAction(_("Sound Effect"))
         self.soundEffect.setCheckable(True)
         self.soundEffect.setChecked(self.effect)
@@ -642,6 +650,7 @@ class mainWindow(QWidget):
     def settingAction_(self):
         self.configDialog = configration()
         self.configDialog.path.lineEdit.setText(self.sgfPath)
+        self.configDialog.music.musicBox.setText(self.musicPath)
         self.configDialog.download.autoSkip.setChecked(self.autoSkip)
         if self.saveAs:
             self.configDialog.download.saveAs.setChecked(True)
@@ -652,6 +661,7 @@ class mainWindow(QWidget):
         
         if self.configDialog.exec_() == QDialog.Accepted:
             self.sgfPath = self.configDialog.path.lineEdit.text()
+            self.musicPath = self.configDialog.music.musicBox.text()
             self.autoSkip = self.configDialog.download.autoSkip.isChecked()
             self.saveAs = self.configDialog.download.saveAs.isChecked()
             self.address = self.configDialog.gnugo.address.text()
@@ -664,6 +674,18 @@ class mainWindow(QWidget):
         sinaDir = os.path.join(self.sgfPath, "sinawq")
         if not os.path.isdir(sinaDir):
             os.makedirs(sinaDir)
+        
+        if not self.musicPath:
+            self.musicAction.setEnabled(False)
+        else:
+            self.musicAction.setEnabled(True)
+    
+    def startMusic(self, b):
+        print("music")
+        if b:
+            self.backgroundMusic.play()
+        else:
+            self.backgroundMusic.stop()
     
     def foxAction_(self):
         self.tx = txwq(self)
@@ -752,6 +774,7 @@ class mainWindow(QWidget):
             cf.set("Board", "coordinate", "True")
         else:
             cf.set("Board", "coordinate", "False")
+        cf.set("Sound", "musicpath", self.musicPath)
         if self.musicAction.isChecked():
             cf.set("Sound", "music", "True")
         else:
