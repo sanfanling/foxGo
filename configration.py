@@ -63,8 +63,11 @@ class music(QFrame):
         h1.addWidget(self.chooseMusic)
         h1.addWidget(self.clearMusic)
         
+        self.infoLabel = QLabel(_("*This setting will take effect in next application startup"), self)
+        
         v1.addWidget(self.musicLabel)
         v1.addLayout(h1)
+        v1.addWidget(self.infoLabel)
         v1.addStretch(10)
         
         self.setLayout(v1)

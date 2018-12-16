@@ -148,7 +148,7 @@ class board(QWidget):
         if len(self.parent.thisGame.stepsGoDict) != 0:
             _x, _y = list(self.parent.thisGame.stepsGoDict.keys())[-1]
             _x, _y = self.goMapToBorad(_x, _y)
-            if count != 0:
+            if list(self.parent.thisGame.stepsGoDict.values())[-1][1] != 0:
                 if self.parent.stepNumberCurrent.isChecked():
                     if list(self.parent.thisGame.stepsGoDict.values())[-1][0] == "black":
                         current_cl = Qt.white

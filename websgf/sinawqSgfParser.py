@@ -9,7 +9,7 @@ class sinawqSgfParser:
 
     def __init__(self):
         self.currentPage = 0
-        self.pageLimited = 973
+        self.pageLimited = 976
 
     def getCatalogUrl(self):
         url = "http://duiyi.sina.com.cn/gibo/new_gibo.asp?cur_page=%d" %(self.currentPage,)

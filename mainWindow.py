@@ -683,7 +683,6 @@ class mainWindow(QWidget):
             self.musicAction.setEnabled(True)
     
     def startMusic(self, b):
-        print("music")
         if b:
             self.backgroundMusic.play()
         else:
