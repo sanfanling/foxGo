@@ -8,8 +8,7 @@ from PyQt5.QtGui import *
 from configparser import ConfigParser
 import os, sys
 
-def _(x):
-    return x
+
 
 class configration(QDialog):
     

@@ -56,7 +56,6 @@ class mainWindow(QWidget):
         
         self.backgroundMusic = QSound(self.musicPath, self)
         self.backgroundMusic.setLoops(99)
-        #self.backgroundMusic.setLoops(-1)
         self.stoneSound = QSoundEffect(self)
         self.setFocusPolicy(Qt.StrongFocus)
         self.setMouseTracking(True)
@@ -173,6 +172,8 @@ class mainWindow(QWidget):
         self.musicAction.setChecked(self.music)
         if not self.musicPath:
             self.musicAction.setEnabled(False)
+        if self.musicPath and self.musicAction.isChecked():
+            self.startMusic(True)
         self.soundEffect = QAction(_("Sound Effect"))
         self.soundEffect.setCheckable(True)
         self.soundEffect.setChecked(self.effect)
