@@ -55,6 +55,7 @@ class mainWindow(QWidget):
             self.effect = False
         
         self.backgroundMusic = QSound(self.musicPath, self)
+        self.backgroundMusic.setLoops(99)
         #self.backgroundMusic.setLoops(-1)
         self.stoneSound = QSoundEffect(self)
         self.setFocusPolicy(Qt.StrongFocus)

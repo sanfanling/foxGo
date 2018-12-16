@@ -87,6 +87,8 @@ class sgfData:
         comment = ""
         j = 0
         for i in iterator:
+            if "AB" in i.properties:
+                continue
             j += 1
             if "C" in i.properties:
                 comment = i.properties["C"][0]
@@ -100,6 +102,8 @@ class sgfData:
         p = 0
         variationDict = {}
         for i in self.rest:
+            if "AB" in i.properties:
+                continue
             p += 1
             if len(i.variations) != 0:
                 variationList = []
