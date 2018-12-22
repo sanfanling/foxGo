@@ -46,7 +46,8 @@ class searchArea(QWidget):
     
     def __init__(self, parent = None):
         super().__init__()
-        self.parent = parent
+        
+        self.parent = parent        
         h1 = QHBoxLayout(None)
         h1.setContentsMargins(20, 0, 0, 0)
         self.rangeLabel = QLabel(_("Select range:"), self)
@@ -86,6 +87,8 @@ class searchLocal(QWidget):
     
     def __init__(self, parent = None):
         super().__init__()
+        
+        self.setAttribute(Qt.WA_QuitOnClose, False)
         cf = ConfigParser()
         cf.read(os.path.expanduser("~/.config/foxGo.conf"))
         m = cf.get("Tag", "tags").split(",")
@@ -166,6 +169,7 @@ class searchLocal(QWidget):
             if t in i:
                 break
         self.parent.startReviewMode(self.titleList[ind])
+        self.lower()
     
     def getFileName(self):
         t = self.searchArea.listView.selectedItems()[0].text()
@@ -175,6 +179,7 @@ class searchLocal(QWidget):
             if t in i:
                 break
         self.parent.startReviewMode(self.titleList[ind])
+        self.lower()
     
     def showSearchResult(self, t):
         self.openButton.setEnabled(False)

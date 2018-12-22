@@ -13,6 +13,7 @@ class sinawq(websgfUi):
     
     def __init__(self, parent = None):
         super().__init__()
+        
         self.setWindowIcon(QIcon("res/logo.png"))
         self.setWindowTitle(_("download sgf files from sina weiqi"))
         self.listView.horizontalHeader().resizeSection(0, 50)

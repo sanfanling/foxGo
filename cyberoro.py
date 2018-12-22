@@ -13,6 +13,7 @@ class cyberoro(websgfUi):
     
     def __init__(self, parent = None):
         super().__init__()
+        
         self.setWindowIcon(QIcon("res/logo.png"))
         self.setWindowTitle(_("Download sgf files from cyberoro"))
         self.listView.horizontalHeader().resizeSection(0, 50)

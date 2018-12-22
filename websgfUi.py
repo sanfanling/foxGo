@@ -10,6 +10,7 @@ class websgfUi(QWidget):
     def __init__(self, parent = None):
         super().__init__()
         
+        self.setAttribute(Qt.WA_QuitOnClose, False)
         self.listView = QTableWidget(0, 4, self)
         self.listView.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.listView.setSelectionBehavior(QAbstractItemView.SelectRows)
