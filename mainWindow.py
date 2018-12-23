@@ -691,28 +691,32 @@ class mainWindow(QWidget):
     
     def foxAction_(self):
         try:
-            self.tx.raise_()
+            self.tx.activateWindow()
+            self.tx.showNormal()
         except:
             self.tx = txwq(self)
             self.tx.show()
     
     def sinaAction_(self):
         try:
-            self.sina.raise_()
+            self.sina.activateWindow()
+            self.sina.showNormal()
         except:
             self.sina = sinawq(self)
             self.sina.show()
     
     def cyberoroAction_(self):
         try:
-            self.cyberoro.raise_()
+            self.cyberoro.activateWindow()
+            self.cyberoro.showNormal()
         except:
             self.cyberoro = cyberoro(self)
             self.cyberoro.show()
     
     def searchAction_(self):
         try:
-            self.searchBox.raise_()
+            self.searchBox.activateWindow()
+            self.searchBox.showNormal()
         except:
             self.searchBox = searchLocal(self)
             self.searchBox.show()
