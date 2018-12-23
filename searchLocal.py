@@ -89,6 +89,7 @@ class searchLocal(QWidget):
         super().__init__()
         
         self.setAttribute(Qt.WA_QuitOnClose, False)
+        self.setAttribute(Qt.WA_DeleteOnClose, True)
         cf = ConfigParser()
         cf.read(os.path.expanduser("~/.config/foxGo.conf"))
         m = cf.get("Tag", "tags").split(",")

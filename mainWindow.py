@@ -690,20 +690,32 @@ class mainWindow(QWidget):
             self.backgroundMusic.stop()
     
     def foxAction_(self):
-        self.tx = txwq(self)
-        self.tx.show()
+        try:
+            self.tx.raise_()
+        except:
+            self.tx = txwq(self)
+            self.tx.show()
     
     def sinaAction_(self):
-        self.sina = sinawq(self)
-        self.sina.show()
+        try:
+            self.sina.raise_()
+        except:
+            self.sina = sinawq(self)
+            self.sina.show()
     
     def cyberoroAction_(self):
-        self.cyberoro = cyberoro(self)
-        self.cyberoro.show()
+        try:
+            self.cyberoro.raise_()
+        except:
+            self.cyberoro = cyberoro(self)
+            self.cyberoro.show()
     
     def searchAction_(self):
-        self.searchBox = searchLocal(self)
-        self.searchBox.show()
+        try:
+            self.searchBox.raise_()
+        except:
+            self.searchBox = searchLocal(self)
+            self.searchBox.show()
     
     def aboutQt_(self):
         QMessageBox.aboutQt(self, _("About Qt"))
